@@ -8,7 +8,7 @@ import Network
 /// swaps the app bundle and reopens it.
 @MainActor
 final class Updater: NSObject {
-    static let feedURL = URL(string: "https://zaytage.github.io/istiqamah/update.json")!
+    static let feedURL = URL(string: "https://zaytage.github.io/daimun/update.json")!
 
     struct Feed: Decodable {
         struct App: Decodable {
@@ -69,7 +69,7 @@ final class Updater: NSObject {
             defer { self.checking = false }
             do {
                 var req = URLRequest(url: Self.feedURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
-                req.setValue("Istiqamah/\(currentVersion)", forHTTPHeaderField: "User-Agent")
+                req.setValue("Daimun/\(currentVersion)", forHTTPHeaderField: "User-Agent")
                 let (data, _) = try await URLSession.shared.data(for: req)
                 let feed = try JSONDecoder().decode(Feed.self, from: data)
                 guard feed.app.build > currentBuild else {

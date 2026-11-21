@@ -12,9 +12,9 @@
   // Published as a claude.ai page: a locked-down frame (no print, downloads only through the
   // platform, no system notifications), and `confirm()` is unavailable.
   const HOSTED = !NATIVE && !!(window.claude && typeof window.claude.use === 'function');
-  const SHARE_URL = 'https://zaytage.github.io/istiqamah/'; // the Istiqamah website
-  const MAC_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-mac.zip'; // always the newest Mac app
-  const WIN_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-windows.zip'; // always the newest Windows app
+  const SHARE_URL = 'https://zaytage.github.io/daimun/'; // the Da’imun website
+  const MAC_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-mac.zip'; // always the newest Mac app
+  const WIN_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-windows.zip'; // always the newest Windows app
   const MIN = 60000, HOUR = 60 * MIN;
   const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
   const TIMES = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -1361,8 +1361,8 @@
 
   // ------------------------------------------------------------------ backup and sharing
   function exportData() {
-    const data = JSON.stringify({ app: 'istiqamah', v: 1, exported: new Date().toISOString(), settings: state.settings, days: state.days }, null, 2);
-    const filename = `istiqamah-backup-${todayKey()}.json`;
+    const data = JSON.stringify({ app: 'daimun', v: 1, exported: new Date().toISOString(), settings: state.settings, days: state.days }, null, 2);
+    const filename = `daimun-backup-${todayKey()}.json`;
     if (MAC) { post({ type: 'export', data, filename }); return; }
     if (HOSTED) {
       window.claude.use('downloads').then((dl) => {
@@ -1385,7 +1385,7 @@
       if (!o || typeof o !== 'object' || !o.days || typeof o.days !== 'object') throw new Error('not a backup');
       pendingImport = o; // confirmed in the settings panel (confirm() is unavailable on hosted pages)
       renderSettings();
-    }).catch(() => info("That file doesn't look like an Da’imun backup."));
+    }).catch(() => info("That file doesn't look like a Da’imun backup."));
   }
   function applyImport() {
     const o = pendingImport;

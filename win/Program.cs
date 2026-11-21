@@ -13,14 +13,21 @@ namespace Istiqamah
     {
         static string Local => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         /// Per-user install folder: no admin rights needed, and the app can update itself there.
-        public static string InstallDir => Path.Combine(Local, "Programs", "Istiqamah");
+        public static string InstallDir => Path.Combine(Local, "Programs", "Daimun");
+        public static string OldInstallDir => Path.Combine(Local, "Programs", "Istiqamah"); // before the rename (1.2.x)
         public static string DataDir
         {
-            get { var d = Path.Combine(Local, "Istiqamah"); Directory.CreateDirectory(d); return d; }
+            get
+            {
+                var d = Path.Combine(Local, "Daimun");
+                var old = Path.Combine(Local, "Istiqamah"); // before the rename: move the chart and settings over once
+                if (!Directory.Exists(d) && Directory.Exists(old)) { try { Directory.Move(old, d); } catch { /* in use: keep going with a fresh folder */ } }
+                Directory.CreateDirectory(d); return d;
+            }
         }
         public static string AppDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
         public static string WebDir => Path.Combine(AppDir, "web");
-        public static string InstalledExe => Path.Combine(InstallDir, "Istiqamah.exe");
+        public static string InstalledExe => Path.Combine(InstallDir, "Daimun.exe");
         public static string StartMenuShortcut => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Da’imun.lnk");
         public static bool Same(string a, string b) =>
             string.Equals(Path.GetFullPath(a).TrimEnd('\\'), Path.GetFullPath(b).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase);
@@ -77,15 +84,16 @@ namespace Istiqamah
             get
             {
                 using (var k = Registry.CurrentUser.OpenSubKey(RunKey))
-                    return k?.GetValue("Istiqamah") is string v && v.IndexOf("Istiqamah.exe", StringComparison.OrdinalIgnoreCase) >= 0;
+                    return (k?.GetValue("Daimun") ?? k?.GetValue("Istiqamah")) is string v && v.IndexOf(".exe", StringComparison.OrdinalIgnoreCase) >= 0;
             }
         }
         public static void Set(bool on)
         {
             using (var k = Registry.CurrentUser.CreateSubKey(RunKey))
             {
-                if (on) k.SetValue("Istiqamah", "\"" + Paths.InstalledExe + "\" --background");
-                else if (k.GetValue("Istiqamah") != null) k.DeleteValue("Istiqamah");
+                if (k.GetValue("Istiqamah") != null) k.DeleteValue("Istiqamah"); // the pre-rename entry
+                if (on) k.SetValue("Daimun", "\"" + Paths.InstalledExe + "\" --background");
+                else if (k.GetValue("Daimun") != null) k.DeleteValue("Daimun");
             }
         }
     }
@@ -105,6 +113,10 @@ namespace Istiqamah
             foreach (var file in Directory.GetFiles(src, "*", SearchOption.AllDirectories))
             {
                 var target = dst + file.Substring(src.Length);
+                // an update made for pre-rename apps carries the program as Istiqamah.exe: install it as Daimun.exe
+                var name = Path.GetFileName(target);
+                if (name.StartsWith("Istiqamah.exe", StringComparison.OrdinalIgnoreCase))
+                    target = Path.Combine(Path.GetDirectoryName(target), "Daimun.exe" + name.Substring("Istiqamah.exe".Length));
                 for (int attempt = 0; ; attempt++)
                 {
                     try { File.Copy(file, target, true); break; }
@@ -157,9 +169,11 @@ namespace Istiqamah
             {
                 WaitForRunningCopyToQuit();
                 bool fresh = !File.Exists(Paths.InstalledExe);
+                bool wasOld = Directory.Exists(Paths.OldInstallDir);
                 CopyDir(Paths.AppDir, Paths.InstallDir);
                 Unblock(Paths.InstallDir);
                 CreateShortcut();
+                if (wasOld) RetireOldInstall();
                 if (fresh) Login.Set(true); // an alarm app should start with Windows; it can be turned off in Settings
                 Process.Start(new ProcessStartInfo(Paths.InstalledExe, "--welcome") { UseShellExecute = false, WorkingDirectory = Paths.InstallDir });
             }
@@ -174,18 +188,30 @@ namespace Istiqamah
             try
             {
                 try { using (var p = Process.GetProcessById(oldPid)) p.WaitForExit(30000); } catch { /* already gone */ }
-                CopyDir(Paths.AppDir, installDir);
-                Unblock(installDir);
-                if (installDir.TrimEnd('\\').Equals(Paths.InstallDir.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase)) CreateShortcut();
-                Process.Start(new ProcessStartInfo(Path.Combine(installDir, "Istiqamah.exe"), "--updated") { UseShellExecute = false, WorkingDirectory = installDir });
+                // Always install into Programs\Daimun; an app from before the rename lived in Programs\Istiqamah.
+                bool fromOld = !Paths.Same(installDir, Paths.InstallDir);
+                CopyDir(Paths.AppDir, Paths.InstallDir);
+                Unblock(Paths.InstallDir);
+                CreateShortcut();
+                if (fromOld) RetireOldInstall();
+                Process.Start(new ProcessStartInfo(Paths.InstalledExe, "--updated") { UseShellExecute = false, WorkingDirectory = Paths.InstallDir });
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Da’imun couldn't finish updating:\n\n" + ex.Message + "\n\nYou can download it again from github.com/zaytage/istiqamah.", "Da’imun", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Da’imun couldn't finish updating:\n\n" + ex.Message + "\n\nYou can download it again from github.com/zaytage/daimun.", "Da’imun", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        /// Remove the app, its shortcut and start-up entry. Your chart (in AppData\Local\Istiqamah) is kept.
+        /// After moving from Programs\Istiqamah to Programs\Daimun: keep "start with Windows" as it was, then delete the old folder.
+        static void RetireOldInstall()
+        {
+            bool startedWithWindows = Login.Enabled;
+            Login.Set(startedWithWindows); // rewrites the entry under the new name and removes the old one
+            var cmd = $"/c timeout /t 3 /nobreak >nul & rmdir /s /q \"{Paths.OldInstallDir}\"";
+            try { Process.Start(new ProcessStartInfo("cmd.exe", cmd) { CreateNoWindow = true, UseShellExecute = false, WindowStyle = ProcessWindowStyle.Hidden }); } catch { }
+        }
+
+        /// Remove the app, its shortcut and start-up entry. Your chart (in AppData\Local\Daimun) is kept.
         public static void Uninstall()
         {
             Login.Set(false);

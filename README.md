@@ -1,6 +1,6 @@
 # Da’imun (دائمون)
 
-*“Those who are constant in their prayer”* (Al-Ma’arij 70:23). Formerly Istiqamah.
+*“Those who are constant in their prayer”* (Al-Ma’arij 70:23).
 
 The adhan on your laptop, and a daily evaluation chart to tick, like the paper chart people share in Ramadan.
 
@@ -24,19 +24,19 @@ Everything is stored on the person's own device. Nothing is uploaded, and there 
 
 ## Mac app
 
-**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-mac.zip (always the newest version). Step-by-step guide for everyone: https://zaytage.github.io/istiqamah/install.html
+**Download:** https://github.com/zaytage/daimun/releases/latest/download/Daimun-mac.zip (always the newest version). Step-by-step guide for everyone: https://zaytage.github.io/daimun/install.html
 
 Unzip it and drag **Da’imun** into **Applications**. The app isn't notarized by Apple, so the first time macOS blocks it: open **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to Da’imun and confirm. After that it opens normally.
 
-**It updates itself.** The app checks https://zaytage.github.io/istiqamah/update.json at launch and every 6 hours (or now, via 🌙 → *Check for updates…*). A new version is downloaded, checked against its SHA-256 fingerprint, and swapped in once no alarm is showing and the window is closed; the app then reopens with a short "Updated to version …" note.
+**It updates itself.** The app checks https://zaytage.github.io/daimun/update.json at launch and every 6 hours (or now, via 🌙 → *Check for updates…*). A new version is downloaded, checked against its SHA-256 fingerprint, and swapped in once no alarm is showing and the window is closed; the app then reopens with a short "Updated to version …" note.
 
 Choose an adhan in Settings, or your own recording from the 🌙 menu → *Adhan sound*.
 
 ## Windows app
 
-**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-windows.zip (Windows 10 or 11).
+**Download:** https://github.com/zaytage/daimun/releases/latest/download/Daimun-windows.zip (Windows 10 or 11).
 
-1. Right-click the zip → **Extract All**, open the folder and double-click **Istiqamah.exe** (the program file keeps its original name).
+1. Right-click the zip → **Extract All**, open the folder and double-click **Daimun.exe**.
 2. Windows may say "Windows protected your PC" (the app isn't signed with a paid certificate). Click **More info → Run anyway**.
 3. Da’imun installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. You can then delete the downloaded folder.
 
@@ -54,7 +54,7 @@ This builds the Mac app (Apple silicon + Intel) and the Windows app, updates the
 
 ## Web app
 
-**Website:** https://zaytage.github.io/istiqamah/ (works on phones and laptops; install it to the home screen). A copy also lives at https://claude.ai/artifact/DcyhS7QNfUpuS6feYZwd4q.
+**Website:** https://zaytage.github.io/daimun/ (works on phones and laptops; install it to the home screen). A copy also lives at https://claude.ai/artifact/DcyhS7QNfUpuS6feYZwd4q.
 
 On that page the adhan and reminders work while the page is open in a tab. Each person's chart stays in their own browser, and **Settings → Save backup** saves a copy. To update it after changing `web/`, run `python3 tools/make_artifact_page.py` and ask Claude to republish `artifact/index.html`.
 

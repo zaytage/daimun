@@ -18,7 +18,7 @@ namespace Istiqamah
     /// then lets the new version copy itself over this one and start.
     sealed class Updater
     {
-        const string Feed = "https://zaytage.github.io/istiqamah/update.json";
+        const string Feed = "https://zaytage.github.io/daimun/update.json";
         readonly TrayApp app;
         bool checking;
         string readyDir;
@@ -40,7 +40,7 @@ namespace Istiqamah
                 ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
                 using (var http = new HttpClient { Timeout = TimeSpan.FromMinutes(3) })
                 {
-                    http.DefaultRequestHeaders.UserAgent.ParseAdd("Istiqamah/" + Version);
+                    http.DefaultRequestHeaders.UserAgent.ParseAdd("Daimun/" + Version);
                     var feed = Json.Obj(await http.GetStringAsync(Feed + "?t=" + DateTime.UtcNow.Ticks));
                     var win = feed.Child("windows");
                     if (win == null || (int)win.Num("build") <= Build)
@@ -62,7 +62,7 @@ namespace Istiqamah
                     var zip = Path.Combine(dir, "update.zip");
                     File.WriteAllBytes(zip, bytes);
                     ZipFile.ExtractToDirectory(zip, Path.Combine(dir, "files"));
-                    var exe = Directory.GetFiles(Path.Combine(dir, "files"), "Istiqamah.exe", SearchOption.AllDirectories).FirstOrDefault()
+                    var exe = Directory.GetFiles(Path.Combine(dir, "files"), "Daimun.exe", SearchOption.AllDirectories).FirstOrDefault()
                               ?? throw new InvalidDataException("The download didn't contain the app.");
                     readyDir = Path.GetDirectoryName(exe);
                     readyInfo = win;
@@ -87,7 +87,7 @@ namespace Istiqamah
             {
                 File.WriteAllText(Path.Combine(Paths.DataDir, "updated.txt"), readyInfo.Get("version") + "\n" + (readyInfo.Get("notes") ?? ""));
                 var args = $"--apply-update {Process.GetCurrentProcess().Id} \"{Paths.AppDir}\"";
-                Process.Start(new ProcessStartInfo(Path.Combine(readyDir, "Istiqamah.exe"), args) { UseShellExecute = false, WorkingDirectory = readyDir });
+                Process.Start(new ProcessStartInfo(Path.Combine(readyDir, "Daimun.exe"), args) { UseShellExecute = false, WorkingDirectory = readyDir });
                 app.Quit();
             }
             catch (Exception ex) { app.Tell("Couldn't install the update", ex.Message); }
