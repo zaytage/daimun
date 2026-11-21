@@ -1,16 +1,16 @@
 {
   "app": {
-    "version": "1.2.1",
-    "build": 5,
-    "sha256": "3c02e190a06e85ddad547b5fb73daccd2dabcb460f7621c8d4f2b2847d0ec458",
-    "notes": "Fixes hearing the adhan twice if Istiqamah was opened twice: only one copy can run now.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2.1/Istiqamah-mac.zip"
+    "version": "1.3.0",
+    "build": 7,
+    "sha256": "32719c96c6f7d5e273c4488fbd08f31aab74dc62e03fe6c4be0ee3acc8926074",
+    "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-mac.zip"
   },
   "windows": {
-    "version": "1.2.1",
-    "build": 5,
-    "sha256": "f1ce8b516d003e8ab2d994dd3183fbf4efce84e0fe9e58d8ca812201192ed752",
-    "notes": "Fixes hearing the adhan twice if Istiqamah was opened twice: only one copy can run now.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2.1/Istiqamah-windows.zip"
+    "version": "1.3.0",
+    "build": 7,
+    "sha256": "2ac56f497c56e3e1989733206f011433e6ba8f85ebf126ef80886bb9ea4ad2a2",
+    "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-windows.zip"
   }
 }
