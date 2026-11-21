@@ -1,9 +1,16 @@
 {
   "app": {
-    "version": "1.1.1",
-    "build": 3,
-    "sha256": "b8c9867e808aefb41f0b9953d4633ac12b2f811c8668aa255e57370a681b0387",
-    "notes": "Checks for updates as soon as your Mac connects to the internet or wakes up.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.1.1/Istiqamah-mac.zip"
+    "version": "1.2",
+    "build": 4,
+    "sha256": "5363d57227d4c6db8ff29b4a6bb820f9896f8aa4c863094425a5ccaf780a6a2a",
+    "notes": "Istiqamah for Windows is here. The Mac app also gets small improvements.",
+    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2/Istiqamah-mac.zip"
+  },
+  "windows": {
+    "version": "1.2",
+    "build": 4,
+    "sha256": "e06ef8be6be9220b3beb303fd6b0fe3cf117b20ae6f167e0d8c1f54b3669c58a",
+    "notes": "Istiqamah for Windows is here. The Mac app also gets small improvements.",
+    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2/Istiqamah-windows.zip"
   }
 }
