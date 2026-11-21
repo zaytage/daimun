@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("GI",{"s":{"":"Other areas","00":"Other areas"},"c":[["Gibraltar","00",36.145,-5.353],["Reclamation Areas","",36.144,-5.357],["South District","",36.114,-5.347],["Town Area","",36.122,-5.349],["Upper Town","",36.136,-5.351],["Sandpits","",36.14,-5.356]]});

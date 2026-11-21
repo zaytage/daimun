@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("TC",{"s":{"":"Other areas","00":"Other areas"},"c":[["Providenciales","",21.783,-72.252],["Cockburn Town","00",21.461,-71.142],["Five Cays Settlement","00",21.757,-72.268],["Wheeland","00",21.814,-72.282],["The Bight Settlements","00",21.78,-72.204],["Kew","00",21.913,-71.993],["Blue Hills Settlements","00",21.807,-72.277]]});

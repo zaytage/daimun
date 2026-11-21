@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("SH",{"s":{"03":"Tristan da Cunha","01":"Ascension","02":"Saint Helena"},"c":[["Georgetown","01",-7.929,-14.412],["Edinburgh of the Seven Seas","03",-37.068,-12.312],["Half Tree Hollow","02",-15.937,-5.72],["Jamestown","02",-15.925,-5.718]]});

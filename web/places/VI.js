@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("VI",{"s":{"030":"Saint Thomas Island","020":"Saint John Island","010":"Saint Croix Island"},"c":[["Saint Croix","010",17.728,-64.747],["Charlotte Amalie","030",18.342,-64.931],["Tutu","030",18.339,-64.887],["Cruz Bay","020",18.331,-64.794],["Christiansted","010",17.747,-64.706],["Altona","030",18.339,-64.949]]});
