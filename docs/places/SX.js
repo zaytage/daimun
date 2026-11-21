@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("SX",{"s":{"":"Other areas","00":"Other areas"},"c":[["Cul de Sac","00",18.049,-63.065],["Lower Prince’s Quarter","00",18.05,-63.038],["Koolbaai","00",18.04,-63.084],["Little Bay","",18.026,-63.065],["Upper Prince’s Quarter","00",18.033,-63.031],["Philipsburg","",18.026,-63.046]]});

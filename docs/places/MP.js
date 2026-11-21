@@ -1,0 +1,1 @@
+IstiqamahPlaces.country("MP",{"s":{"120":"Tinian","110":"Saipan"},"c":[["Saipan","110",15.212,145.755],["San Jose Village","120",14.968,145.62],["Garapan","110",15.211,145.72],["Chalan Piao village","110",15.141,145.7],["Fananganan village","110",15.205,145.728],["Chalan Laulau Village","110",15.181,145.714]]});
