@@ -1,9 +1,9 @@
 {
   "app": {
-    "version": "1.1",
-    "build": 2,
-    "sha256": "9d33229806b65f75971f994e08caf834fcce5a16fb747dde7d4423cbcf9230eb",
-    "notes": "Istiqamah now updates itself, and Ishraq and Duha can show full screen.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.1/Istiqamah-mac.zip"
+    "version": "1.1.1",
+    "build": 3,
+    "sha256": "b8c9867e808aefb41f0b9953d4633ac12b2f811c8668aa255e57370a681b0387",
+    "notes": "Checks for updates as soon as your Mac connects to the internet or wakes up.",
+    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.1.1/Istiqamah-mac.zip"
   }
 }
