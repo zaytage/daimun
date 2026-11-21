@@ -73,7 +73,7 @@ final class Updater: NSObject {
                 let (data, _) = try await URLSession.shared.data(for: req)
                 let feed = try JSONDecoder().decode(Feed.self, from: data)
                 guard feed.app.build > currentBuild else {
-                    if userInitiated { tell("Istiqamah is up to date", "You have the latest version, \(currentVersion).") }
+                    if userInitiated { tell("Da’imun is up to date", "You have the latest version, \(currentVersion).") }
                     return
                 }
                 if userInitiated { tell("Updating to version \(feed.app.version)…", "It installs itself once no alarm is showing.") }
@@ -121,7 +121,7 @@ final class Updater: NSObject {
         }
         let target = Bundle.main.bundleURL
         guard FileManager.default.isWritableFile(atPath: target.deletingLastPathComponent().path) else {
-            tell("Version \(ready.info.version) is ready", "Move Istiqamah into your Applications folder so it can update itself.")
+            tell("Version \(ready.info.version) is ready", "Move Da’imun into your Applications folder so it can update itself.")
             return
         }
         UserDefaults.standard.set(ready.info.version, forKey: "updatedTo")
@@ -150,6 +150,6 @@ final class Updater: NSObject {
         guard CommandLine.arguments.contains("--updated"), let v = UserDefaults.standard.string(forKey: "updatedTo") else { return }
         let notes = UserDefaults.standard.string(forKey: "updateNotes") ?? ""
         UserDefaults.standard.removeObject(forKey: "updatedTo")
-        tell("Istiqamah updated to version \(v)", notes.isEmpty ? nil : notes)
+        tell("Da’imun updated to version \(v)", notes.isEmpty ? nil : notes)
     }
 }

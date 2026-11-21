@@ -21,7 +21,7 @@ namespace Istiqamah
         public static string AppDir => AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
         public static string WebDir => Path.Combine(AppDir, "web");
         public static string InstalledExe => Path.Combine(InstallDir, "Istiqamah.exe");
-        public static string StartMenuShortcut => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Istiqamah.lnk");
+        public static string StartMenuShortcut => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Da’imun.lnk");
         public static bool Same(string a, string b) =>
             string.Equals(Path.GetFullPath(a).TrimEnd('\\'), Path.GetFullPath(b).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase);
     }
@@ -141,10 +141,11 @@ namespace Istiqamah
             {
                 var t = Type.GetTypeFromProgID("WScript.Shell");
                 dynamic shell = Activator.CreateInstance(t);
+                try { File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Istiqamah.lnk")); } catch { }
                 dynamic lnk = shell.CreateShortcut(Paths.StartMenuShortcut);
                 lnk.TargetPath = Paths.InstalledExe;
                 lnk.WorkingDirectory = Paths.InstallDir;
-                lnk.Description = "Istiqamah: the adhan on your laptop and a daily evaluation chart";
+                lnk.Description = "Da’imun: the adhan on your laptop and a daily evaluation chart";
                 lnk.Save();
             }
             catch { /* a missing shortcut is not fatal */ }
@@ -164,7 +165,7 @@ namespace Istiqamah
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Istiqamah couldn't install itself:\n\n" + ex.Message, "Istiqamah", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Da’imun couldn't install itself:\n\n" + ex.Message, "Da’imun", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -175,11 +176,12 @@ namespace Istiqamah
                 try { using (var p = Process.GetProcessById(oldPid)) p.WaitForExit(30000); } catch { /* already gone */ }
                 CopyDir(Paths.AppDir, installDir);
                 Unblock(installDir);
+                if (installDir.TrimEnd('\\').Equals(Paths.InstallDir.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase)) CreateShortcut();
                 Process.Start(new ProcessStartInfo(Path.Combine(installDir, "Istiqamah.exe"), "--updated") { UseShellExecute = false, WorkingDirectory = installDir });
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Istiqamah couldn't finish updating:\n\n" + ex.Message + "\n\nYou can download it again from github.com/zaytage/istiqamah.", "Istiqamah", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Da’imun couldn't finish updating:\n\n" + ex.Message + "\n\nYou can download it again from github.com/zaytage/istiqamah.", "Da’imun", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

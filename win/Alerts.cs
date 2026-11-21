@@ -22,7 +22,7 @@ namespace Istiqamah
             ShowInTaskbar = false;
             TopMost = true;
             BackColor = Color.FromArgb(8, 40, 36);
-            Text = "Istiqamah";
+            Text = "Da’imun";
         }
     }
 
@@ -36,7 +36,7 @@ namespace Istiqamah
             ShowInTaskbar = false;
             TopMost = true;
             BackColor = Color.FromArgb(30, 40, 37);
-            Text = "Istiqamah";
+            Text = "Da’imun";
         }
         protected override bool ShowWithoutActivation => true;
         protected override CreateParams CreateParams

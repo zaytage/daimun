@@ -23,6 +23,8 @@ rm build/Istiqamah-arm64
 
 cp mac/Info.plist "$APP/Contents/Info.plist"
 cp mac/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+mkdir -p "$APP/Contents/Resources/en.lproj"
+printf '"CFBundleDisplayName" = "Da’imun";\n"CFBundleName" = "Da’imun";\n' > "$APP/Contents/Resources/en.lproj/InfoPlist.strings"
 rsync -a --exclude '.DS_Store' web/ "$APP/Contents/Resources/web/"
 codesign --force --deep --sign - "$APP"
 

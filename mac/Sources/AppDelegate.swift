@@ -86,12 +86,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         let appItem = NSMenuItem()
         main.addItem(appItem)
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "About Istiqamah", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "About Da’imun", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Hide Istiqamah", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
-        appMenu.addItem(withTitle: "Quit Istiqamah", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "Hide Da’imun", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        appMenu.addItem(withTitle: "Quit Da’imun", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
 
         let editItem = NSMenuItem()
@@ -120,7 +120,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let b = statusItem.button {
-            let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Istiqamah")
+            let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Da’imun")
             img?.isTemplate = true
             b.image = img
             b.imagePosition = .imageLeading
@@ -171,7 +171,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
             menu.addItem(menuItem("Choose your city to get started…", #selector(openWindowAction)))
         }
         menu.addItem(.separator())
-        menu.addItem(menuItem("Open Istiqamah", #selector(openWindowAction), "o"))
+        menu.addItem(menuItem("Open Da’imun", #selector(openWindowAction), "o"))
         menu.addItem(menuItem("Test the alarm", #selector(testAlarm)))
         let soundItem = NSMenuItem(title: "Adhan sound", action: nil, keyEquivalent: "")
         let sm = NSMenu()
@@ -193,7 +193,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         let version = NSMenuItem(title: "Version \(updater.currentVersion)", action: nil, keyEquivalent: "")
         version.isEnabled = false
         menu.addItem(version)
-        menu.addItem(menuItem("Quit Istiqamah", #selector(quit), "q"))
+        menu.addItem(menuItem("Quit Da’imun", #selector(quit), "q"))
     }
 
     // MARK: Web view and window
@@ -221,7 +221,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     func setupWindow() {
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1060, height: 820),
                           styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
-        window.title = "Istiqamah"
+        window.title = "Da’imun"
         window.minSize = NSSize(width: 400, height: 520)
         window.contentView = webView
         window.isReleasedWhenClosed = false
@@ -436,7 +436,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         activate()
         let p = NSOpenPanel()
         p.title = "Choose an adhan recording"
-        p.message = "Pick an audio file (mp3, m4a, wav…). Istiqamah keeps its own copy."
+        p.message = "Pick an audio file (mp3, m4a, wav…). Da’imun keeps its own copy."
         p.allowedContentTypes = [.audio]
         p.allowsMultipleSelection = false
         guard p.runModal() == .OK, let url = p.url else { return }
@@ -462,7 +462,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         } catch {
             let a = NSAlert()
             a.messageText = on ? "Couldn't turn on Open at Login" : "Couldn't turn off Open at Login"
-            a.informativeText = "\(error.localizedDescription)\n\nYou can also add Istiqamah in System Settings → General → Login Items."
+            a.informativeText = "\(error.localizedDescription)\n\nYou can also add Da’imun in System Settings → General → Login Items."
             a.runModal()
         }
         sendNativeInfo()

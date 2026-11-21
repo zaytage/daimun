@@ -1,4 +1,6 @@
-# Istiqamah
+# Da’imun (دائمون)
+
+*“Those who are constant in their prayer”* (Al-Ma’arij 70:23). Formerly Istiqamah.
 
 The adhan on your laptop, and a daily evaluation chart to tick, like the paper chart people share in Ramadan.
 
@@ -22,9 +24,9 @@ Everything is stored on the person's own device. Nothing is uploaded, and there 
 
 ## Mac app
 
-**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip (always the newest version). Step-by-step guide for everyone: https://zaytage.github.io/istiqamah/install.html
+**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-mac.zip (always the newest version). Step-by-step guide for everyone: https://zaytage.github.io/istiqamah/install.html
 
-Unzip it and drag **Istiqamah** into **Applications**. The app isn't notarized by Apple, so the first time macOS blocks it: open **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to Istiqamah and confirm. After that it opens normally.
+Unzip it and drag **Da’imun** into **Applications**. The app isn't notarized by Apple, so the first time macOS blocks it: open **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to Da’imun and confirm. After that it opens normally.
 
 **It updates itself.** The app checks https://zaytage.github.io/istiqamah/update.json at launch and every 6 hours (or now, via 🌙 → *Check for updates…*). A new version is downloaded, checked against its SHA-256 fingerprint, and swapped in once no alarm is showing and the window is closed; the app then reopens with a short "Updated to version …" note.
 
@@ -32,13 +34,13 @@ Choose an adhan in Settings, or your own recording from the 🌙 menu → *Adhan
 
 ## Windows app
 
-**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-windows.zip (Windows 10 or 11).
+**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-windows.zip (Windows 10 or 11).
 
-1. Right-click the zip → **Extract All**, open the folder and double-click **Istiqamah.exe**.
+1. Right-click the zip → **Extract All**, open the folder and double-click **Istiqamah.exe** (the program file keeps its original name).
 2. Windows may say "Windows protected your PC" (the app isn't signed with a paid certificate). Click **More info → Run anyway**.
-3. Istiqamah installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. You can then delete the downloaded folder.
+3. Da’imun installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. You can then delete the downloaded folder.
 
-It lives by the clock in the taskbar (click the ^ arrow if it's hidden; you can drag it next to the clock). It shows the same full-screen adhan, reminders, Today and Progress as the Mac app, and **updates itself** the same way. To remove it: taskbar icon → *Uninstall Istiqamah…* (your chart is kept).
+It lives by the clock in the taskbar (click the ^ arrow if it's hidden; you can drag it next to the clock). It shows the same full-screen adhan, reminders, Today and Progress as the Mac app, and **updates itself** the same way. To remove it: taskbar icon → *Uninstall Da’imun…* (your chart is kept).
 
 Built from `win/` with the .NET SDK (targets .NET Framework 4.8, built into Windows, and Microsoft Edge WebView2).
 

@@ -45,7 +45,7 @@ namespace Istiqamah
                     var win = feed.Child("windows");
                     if (win == null || (int)win.Num("build") <= Build)
                     {
-                        if (userInitiated) app.Tell("Istiqamah is up to date", "You have the latest version, " + Version + ".");
+                        if (userInitiated) app.Tell("Da’imun is up to date", "You have the latest version, " + Version + ".");
                         return;
                     }
                     if (userInitiated) app.Tell("Updating to version " + win.Get("version") + "…", "It installs itself once no alarm is showing.");
@@ -100,7 +100,7 @@ namespace Istiqamah
             if (!Program.Has("--updated") || !File.Exists(f)) return;
             var lines = File.ReadAllText(f).Split(new[] { '\n' }, 2);
             try { File.Delete(f); } catch { }
-            app.Later(2500, () => app.Tell("Istiqamah updated to version " + lines[0], lines.Length > 1 && lines[1].Trim().Length > 0 ? lines[1].Trim() : null));
+            app.Later(2500, () => app.Tell("Da’imun updated to version " + lines[0], lines.Length > 1 && lines[1].Trim().Length > 0 ? lines[1].Trim() : null));
         }
     }
 }

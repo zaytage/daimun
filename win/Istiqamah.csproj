@@ -12,7 +12,7 @@
     <RootNamespace>Istiqamah</RootNamespace>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Product>Istiqamah</Product>
+    <Product>Da’imun</Product>
     <Description>The adhan on your laptop and a daily evaluation chart.</Description>
     <Version>1.0</Version>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>

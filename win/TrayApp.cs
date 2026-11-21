@@ -82,7 +82,7 @@ namespace Istiqamah
         public MainWindow(TrayApp app)
         {
             this.app = app;
-            Text = "Istiqamah";
+            Text = "Da’imun";
             Icon = TrayApp.AppIcon;
             ClientSize = new Size(1060, 800);
             MinimumSize = new Size(420, 560);
@@ -178,7 +178,7 @@ namespace Istiqamah
             alerts = new Alerts(this);
             updater = new Updater(this);
             menu.Opening += (s, e) => BuildMenu();
-            tray = new NotifyIcon { Icon = AppIcon, Text = "Istiqamah", ContextMenuStrip = menu, Visible = true };
+            tray = new NotifyIcon { Icon = AppIcon, Text = "Da’imun", ContextMenuStrip = menu, Visible = true };
             tray.MouseClick += (s, e) => { if (e.Button == MouseButtons.Left) ShowMain(); };
 
             Every(10_000, Tick);
@@ -209,8 +209,8 @@ namespace Istiqamah
             }
             catch
             {
-                var r = MessageBox.Show("Istiqamah needs Microsoft Edge WebView2, which comes with Windows 10 and 11.\n\nOpen Microsoft's download page now?",
-                    "Istiqamah", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                var r = MessageBox.Show("Da’imun needs Microsoft Edge WebView2, which comes with Windows 10 and 11.\n\nOpen Microsoft's download page now?",
+                    "Da’imun", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (r == DialogResult.Yes) OpenUrl("https://developer.microsoft.com/microsoft-edge/webview2/");
                 Quit();
                 return;
@@ -408,9 +408,9 @@ namespace Istiqamah
         void UpdateTrayText()
         {
             var now = NowMs;
-            string text = "Istiqamah";
+            string text = "Da’imun";
             var cur = CurrentPending(now);
-            if (cur != null) text = $"Istiqamah · {cur.Get("name")} has come in";
+            if (cur != null) text = $"Da’imun · {cur.Get("name")} has come in";
             else if (today != null)
             {
                 var next = today.List("prayers").FirstOrDefault(p => p.Num("at") > now);
@@ -420,7 +420,7 @@ namespace Istiqamah
                 if (name != null)
                 {
                     var mins = (int)Math.Ceiling((at - now) / 60000);
-                    text = mins <= 60 ? $"Istiqamah · {name} in {mins} min" : $"Istiqamah · {name} at {Clock(at)}";
+                    text = mins <= 60 ? $"Da’imun · {name} in {mins} min" : $"Da’imun · {name} at {Clock(at)}";
                 }
             }
             tray.Text = text.Length > 63 ? text.Substring(0, 63) : text;
@@ -461,7 +461,7 @@ namespace Istiqamah
                 menu.Items.Add(setup);
             }
             menu.Items.Add(new ToolStripSeparator());
-            Add("Open Istiqamah", ShowMain);
+            Add("Open Da’imun", ShowMain);
             Add("Test the alarm", () => RunJs("window.Istiqamah && window.Istiqamah.testAlarm()"));
             var login = new ToolStripMenuItem("Start with Windows") { Checked = Login.Enabled };
             login.Click += (s, e) => { Login.Set(!Login.Enabled); SendNativeInfo(); };
@@ -469,15 +469,15 @@ namespace Istiqamah
             menu.Items.Add(new ToolStripSeparator());
             Add("Check for updates…", () => updater.Check(true));
             menu.Items.Add(new ToolStripMenuItem("Version " + Updater.Version) { Enabled = false });
-            Add("Uninstall Istiqamah…", () =>
+            Add("Uninstall Da’imun…", () =>
             {
-                var r = MessageBox.Show("Remove Istiqamah from this PC?\n\nYour chart is kept, so it's still there if you install it again.",
-                    "Istiqamah", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                var r = MessageBox.Show("Remove Da’imun from this PC?\n\nYour chart is kept, so it's still there if you install it again.",
+                    "Da’imun", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (r != DialogResult.OK) return;
                 Installer.Uninstall();
                 Quit();
             });
-            Add("Quit Istiqamah", Quit);
+            Add("Quit Da’imun", Quit);
 
             void Add(string text, Action a)
             {

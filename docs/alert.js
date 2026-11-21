@@ -13,7 +13,7 @@
     const b64 = decodeURIComponent(location.hash.slice(1));
     p = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))));
   } catch (e) { p = {}; }
-  const e = p.event || { title: 'Istiqamah', kind: 'info' };
+  const e = p.event || { title: 'Da’imun', kind: 'info' };
   const mode = p.mode || 'overlay';
   const prayer = e.kind === 'prayer' || e.kind === 'nag';
   const audio = new Audio();

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Publish a new Istiqamah version. Everyone's Mac and Windows apps update themselves, and the website updates too.
+# Publish a new Da’imun version. Everyone's Mac and Windows apps update themselves, and the website updates too.
 #
 #   tools/release.sh 1.2 "What changed, in one short sentence"
 #
@@ -17,7 +17,7 @@ TRAILER="Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 
 BUILD=$(( $(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$PLIST") + 1 ))
 /usr/libexec/PlistBuddy -c "Set CFBundleShortVersionString $VERSION" -c "Set CFBundleVersion $BUILD" "$PLIST"
-echo "Istiqamah $VERSION (build $BUILD)"
+echo "Da’imun $VERSION (build $BUILD)"
 
 bash build.sh
 SHA=$(shasum -a 256 build/Istiqamah-mac.zip | awk '{print $1}')
@@ -38,9 +38,13 @@ with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
     for d, _, files in os.walk(root):
         for f in files:
             full = os.path.join(d, f)
-            z.write(full, os.path.relpath(full, root))
+            rel = os.path.relpath(full, root)
+            z.write(full, "Daimun" + rel[len("Istiqamah"):] if rel.startswith("Istiqamah") else rel)
 PY
 WSHA=$(shasum -a 256 build/Istiqamah-windows.zip | awk '{print $1}')
+# New file names, plus the old names so links people already shared keep working.
+cp build/Istiqamah-mac.zip build/Daimun-mac.zip
+cp build/Istiqamah-windows.zip build/Daimun-windows.zip
 
 # The website: the web app as it is now. update.json keeps the previous version until the release exists.
 rm -rf docs.tmp && mkdir docs.tmp
@@ -50,10 +54,10 @@ touch docs.tmp/.nojekyll
 rm -rf docs && mv docs.tmp docs
 
 git add -A
-git commit -q -m "Istiqamah $VERSION" -m "$NOTES" -m "$TRAILER"
+git commit -q -m "Da’imun $VERSION" -m "$NOTES" -m "$TRAILER"
 git push -q origin main
 
-"$GH" release create "v$VERSION" build/Istiqamah-mac.zip build/Istiqamah-windows.zip --repo "$REPO" --title "Istiqamah $VERSION" --notes "$NOTES"
+"$GH" release create "v$VERSION" build/Daimun-mac.zip build/Daimun-windows.zip build/Istiqamah-mac.zip build/Istiqamah-windows.zip --repo "$REPO" --title "Da’imun $VERSION" --notes "$NOTES"
 
 # Now tell the apps.
 python3 - "$VERSION" "$BUILD" "$SHA" "$NOTES" "$REPO" "$WSHA" > docs/update.json <<'EOF'
@@ -61,11 +65,11 @@ import json, sys
 version, build, sha, notes, repo, wsha = sys.argv[1:7]
 base = f"https://github.com/{repo}/releases/download/v{version}/"
 print(json.dumps({
-    "app": {"version": version, "build": int(build), "sha256": sha, "notes": notes, "url": base + "Istiqamah-mac.zip"},
-    "windows": {"version": version, "build": int(build), "sha256": wsha, "notes": notes, "url": base + "Istiqamah-windows.zip"},
+    "app": {"version": version, "build": int(build), "sha256": sha, "notes": notes, "url": base + "Daimun-mac.zip"},
+    "windows": {"version": version, "build": int(build), "sha256": wsha, "notes": notes, "url": base + "Daimun-windows.zip"},
 }, indent=2))
 EOF
 git add docs/update.json
-git commit -q -m "Announce Istiqamah $VERSION to the apps" -m "$TRAILER"
+git commit -q -m "Announce Da’imun $VERSION to the apps" -m "$TRAILER"
 git push -q origin main
 echo "Published $VERSION. Apps pick it up within a few hours, or straight away with Check for updates."

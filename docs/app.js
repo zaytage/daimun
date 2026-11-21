@@ -13,8 +13,8 @@
   // platform, no system notifications), and `confirm()` is unavailable.
   const HOSTED = !NATIVE && !!(window.claude && typeof window.claude.use === 'function');
   const SHARE_URL = 'https://zaytage.github.io/istiqamah/'; // the Istiqamah website
-  const MAC_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip'; // always the newest Mac app
-  const WIN_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-windows.zip'; // always the newest Windows app
+  const MAC_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-mac.zip'; // always the newest Mac app
+  const WIN_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Daimun-windows.zip'; // always the newest Windows app
   const MIN = 60000, HOUR = 60 * MIN;
   const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
   const TIMES = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -749,18 +749,19 @@
     if (!S.place) {
       parts.push(`<section class="card setup">
         <h2>Assalamu alaikum</h2>
-        <p>Istiqamah calls you to each solat with the adhan and keeps a daily chart of your solat, sunnah, Quran, salawat and dhikr to tick, just like the paper evaluation chart. Choose where you are so the prayer times are exact.</p>
+        <p>Da’imun calls you to each solat with the adhan and keeps a daily chart of your solat, sunnah, Quran, salawat and dhikr to tick, just like the paper evaluation chart. Choose where you are so the prayer times are exact.</p>
+        <p class="hint">Da’imun (دائمون) is from the Qur’an: <i>“those who are constant in their prayer”</i> (Al-Ma’arij 70:23).</p>
         <div class="picker" data-picker="setup"></div>
         <div class="row"><button class="btn primary" data-act="save-place">Use this place</button>
         ${NATIVE || HOSTED ? '' : '<button class="btn secondary" data-act="use-location">Use my location</button>'}</div>
         <p class="hint">Everything stays on this device. Nothing is uploaded.</p></section>`);
     } else {
       if (isPaused(todayKey())) parts.push(`<div class="notice"><span>Solat alarms are paused${S.pausedUntil === 'forever' ? '' : ` until the end of ${esc(fromKey(S.pausedUntil).toLocaleDateString([], { weekday: 'long', day: 'numeric', month: 'short' }))}`}.</span><button class="btn sm secondary" data-act="resume">Resume</button></div>`);
-      if (HOSTED && !hostedNoteSeen()) parts.push('<div class="notice"><span>Keep this page open in a tab and Istiqamah will play the adhan and remind you while it\'s open. For alarms that reach you even when it\'s closed, use the Istiqamah Mac app.</span><button class="btn sm secondary" data-act="hosted-ok">Got it</button></div>');
+      if (HOSTED && !hostedNoteSeen()) parts.push('<div class="notice"><span>Keep this page open in a tab and Da’imun will play the adhan and remind you while it\'s open. For alarms that reach you even when it\'s closed, use the Da’imun Mac app.</span><button class="btn sm secondary" data-act="hosted-ok">Got it</button></div>');
       if (!NATIVE && !HOSTED && 'Notification' in window && Notification.permission === 'default') parts.push('<div class="notice"><span><b>Turn on reminders</b> so the adhan and reminders still reach you when this tab is in the background.</span><button class="btn sm primary" data-act="notif">Turn on</button></div>');
-      if (!NATIVE && !HOSTED && 'Notification' in window && Notification.permission === 'denied') parts.push('<div class="notice subtle"><span>Notifications are blocked for this site, so alarms only show while Istiqamah is open. You can allow them in your browser\'s site settings.</span></div>');
+      if (!NATIVE && !HOSTED && 'Notification' in window && Notification.permission === 'denied') parts.push('<div class="notice subtle"><span>Notifications are blocked for this site, so alarms only show while Da’imun is open. You can allow them in your browser\'s site settings.</span></div>');
       if (!audioReady()) parts.push('<div class="notice subtle"><span>Click anywhere once so the adhan is allowed to play.</span></div>');
-      if (!NATIVE && installPrompt) parts.push('<div class="notice"><span><b>Install Istiqamah</b> so it runs in its own window and keeps reminding you.</span><button class="btn sm secondary" data-act="install">Install</button></div>');
+      if (!NATIVE && installPrompt) parts.push('<div class="notice"><span><b>Install Da’imun</b> so it runs in its own window and keeps reminding you.</span><button class="btn sm secondary" data-act="install">Install</button></div>');
     }
     $('#banner').innerHTML = parts.join('');
     fillPickers();
@@ -1156,7 +1157,7 @@
         <section><h3>Solat alarm</h3>
           ${toggle('alarm.enabled', A.enabled, 'Call me at every solat time')}
           ${HOSTED ? '<p class="hint">On this page the alarm appears while the page is open in a tab. The Mac app can also call you when it\'s closed.</p>' : ''}
-          ${HOSTED ? '' : NATIVE ? `<label class="field"><span>How firm</span><select data-set="alarm.style">${opt('fullscreen', 'Full screen until I mark it', A.style)}${opt('popup', 'Floating window', A.style)}${opt('notification', 'Corner notification', A.style)}</select></label>` : '<p class="hint">In the browser the alarm appears inside Istiqamah, plus a system notification when it is in the background.</p>'}
+          ${HOSTED ? '' : NATIVE ? `<label class="field"><span>How firm</span><select data-set="alarm.style">${opt('fullscreen', 'Full screen until I mark it', A.style)}${opt('popup', 'Floating window', A.style)}${opt('notification', 'Corner notification', A.style)}</select></label>` : '<p class="hint">In the browser the alarm appears inside Da’imun, plus a system notification when it is in the background.</p>'}
           <label class="field"><span>Sound</span><select data-set="alarm.sound">${opt('adhan', 'Adhan', A.sound)}${opt('chime', 'Gentle chime', A.sound)}${opt('silent', 'Silent', A.sound)}</select></label>
           <label class="field"><span>Adhan</span><select data-set="alarm.adhan">${ADHANS.filter((a) => a.id !== 'fajr').map((a) => opt(a.id, `${a.name}, ${a.detail}`, A.adhan)).join('')}${opt('custom', 'My own recording', A.adhan)}</select></label>
           <label class="field"><span>For Fajr</span><select data-set="alarm.fajrAdhan">${opt('fajr', 'Fajr adhan, with "prayer is better than sleep"', A.fajrAdhan)}${opt('same', 'The same adhan as the other prayers', A.fajrAdhan)}</select></label>
@@ -1209,7 +1210,7 @@
           <ul class="custom-list">${(S.custom || []).map((c) => `<li><span>${esc(c.label)}</span><button type="button" class="btn sm ghost" data-sa="custom-del" data-id="${esc(c.id)}" aria-label="Remove ${esc(c.label)}">Remove</button></li>`).join('')}</ul>
           <div class="row"><input id="custom-new" maxlength="40" placeholder="e.g. Sadaqah"><button type="button" class="btn sm secondary" data-sa="custom-add">Add</button></div>
         </section>
-        ${NATIVE ? `<section><h3>${MAC ? 'Mac' : 'Windows'}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC ? 'Open Istiqamah when I log in' : 'Start Istiqamah with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Istiqamah updates itself.</p>` : ''}</section>` : ''}
+        ${NATIVE ? `<section><h3>${MAC ? 'Mac' : 'Windows'}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC ? 'Open Da’imun when I log in' : 'Start Da’imun with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Da’imun updates itself.</p>` : ''}</section>` : ''}
         <section><h3>Your data</h3>
           <p class="hint">Everything is stored on this device only${HOSTED ? ', in this browser' : ''}. Save a backup now and then, and to move your chart to another device.</p>
           <div class="row"><button type="button" class="btn sm secondary" data-sa="export">Save backup</button>
@@ -1217,13 +1218,14 @@
             <button type="button" class="btn sm danger" data-sa="reset">Erase everything</button></div>
           ${pendingImport ? `<div class="confirm-row"><span>Backup with ${Object.keys(pendingImport.days).length} days. Days in it replace the same days here.</span><button type="button" class="btn sm primary" data-sa="import-confirm">Import it</button><button type="button" class="btn sm ghost" data-sa="import-cancel">Cancel</button></div>` : ''}
         </section>
+        <section><h3>About the name</h3><p class="hint">Da’imun (دائمون) comes from <i>“alladhina hum ‘ala salatihim da’imun”</i>: “those who are constant in their prayer” (Al-Ma’arij 70:23).</p></section>
         <section><h3>Credits</h3>
           <ul class="credits">${ADHANS.map((a) => `<li>${esc(a.name)} adhan: ${esc(a.credit)}</li>`).join('')}
-            <li>The adhan recordings come from Wikimedia Commons. They were trimmed and levelled for Istiqamah and are shared under the same licences.</li>
+            <li>The adhan recordings come from Wikimedia Commons. They were trimmed and levelled for Da’imun and are shared under the same licences.</li>
             <li>Place names and coordinates: GeoNames (geonames.org), CC BY 4.0.</li>
             <li>Prayer times use the astronomical method published by PrayTimes.org.</li></ul>
         </section>
-        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Istiqamah to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a>. It keeps itself up to date.</p>') + '</section>' : ''}
+        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Da’imun to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a>. It keeps itself up to date.</p>') + '</section>' : ''}
       </div></div>`;
     const body = dlg.querySelector('.settings-body');
     if (body) body.scrollTop = prevScroll;
@@ -1364,7 +1366,7 @@
     if (MAC) { post({ type: 'export', data, filename }); return; }
     if (HOSTED) {
       window.claude.use('downloads').then((dl) => {
-        if (!dl) { info("Saving files isn't available here. Open Istiqamah in a browser to save a backup."); return; }
+        if (!dl) { info("Saving files isn't available here. Open Da’imun in a browser to save a backup."); return; }
         return dl.save({ filename, data }).then(() => info('Backup saved.'), (err) => {
           if (err && err.code !== 'declined') info("The backup couldn't be saved. Please try again.");
         });
@@ -1383,7 +1385,7 @@
       if (!o || typeof o !== 'object' || !o.days || typeof o.days !== 'object') throw new Error('not a backup');
       pendingImport = o; // confirmed in the settings panel (confirm() is unavailable on hosted pages)
       renderSettings();
-    }).catch(() => info("That file doesn't look like an Istiqamah backup."));
+    }).catch(() => info("That file doesn't look like an Da’imun backup."));
   }
   function applyImport() {
     const o = pendingImport;
@@ -1401,14 +1403,14 @@
   async function share() {
     const url = shareUrl();
     if (!url) return;
-    const text = 'Istiqamah: the adhan on your laptop plus a daily evaluation chart for solat, Quran, salawat and dhikr.';
+    const text = 'Da’imun: the adhan on your laptop plus a daily evaluation chart for solat, Quran, salawat and dhikr.';
     if (HOSTED) {
       // Called straight from the click so the clipboard write is allowed.
       if (navigator.clipboard) navigator.clipboard.writeText(`${text} ${url}`).then(() => info('Link copied. Paste it to share.'), () => info(`Copy this link to share: ${url}`));
       else info(`Copy this link to share: ${url}`);
       return;
     }
-    if (!NATIVE && navigator.share) { try { await navigator.share({ title: 'Istiqamah', text, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    if (!NATIVE && navigator.share) { try { await navigator.share({ title: 'Da’imun', text, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     copyText(`${text} ${url}`);
     info('Link copied. Paste it to share.');
   }
