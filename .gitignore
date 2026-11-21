@@ -3,3 +3,5 @@ build/
 artifact/
 docs.tmp/
 .claude/
+win/bin/
+win/obj/

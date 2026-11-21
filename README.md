@@ -30,13 +30,25 @@ Unzip it and drag **Istiqamah** into **Applications**. The app isn't notarized b
 
 Choose an adhan in Settings, or your own recording from the 🌙 menu → *Adhan sound*.
 
+## Windows app
+
+**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-windows.zip (Windows 10 or 11).
+
+1. Right-click the zip → **Extract All**, open the folder and double-click **Istiqamah.exe**.
+2. Windows may say "Windows protected your PC" (the app isn't signed with a paid certificate). Click **More info → Run anyway**.
+3. Istiqamah installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. You can then delete the downloaded folder.
+
+It lives by the clock in the taskbar (click the ^ arrow if it's hidden; you can drag it next to the clock). It shows the same full-screen adhan, reminders, Today and Progress as the Mac app, and **updates itself** the same way. To remove it: taskbar icon → *Uninstall Istiqamah…* (your chart is kept).
+
+Built from `win/` with the .NET SDK (targets .NET Framework 4.8, built into Windows, and Microsoft Edge WebView2).
+
 ## Publishing a new version
 
 ```bash
 tools/release.sh 1.2 "What changed, in one short sentence"
 ```
 
-This builds the app (Apple silicon + Intel), updates the website in `docs/`, creates the GitHub release with the zip, and then publishes `update.json` so every installed app updates itself.
+This builds the Mac app (Apple silicon + Intel) and the Windows app, updates the website in `docs/`, creates the GitHub release with the zip, and then publishes `update.json` so every installed app updates itself.
 
 ## Web app
 

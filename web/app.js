@@ -5,12 +5,16 @@
 
   // ------------------------------------------------------------------ constants
   const PT = window.PrayerTimes;
-  const NATIVE = !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.istiqamah);
+  // Inside the Mac app (WKWebView) or the Windows app (WebView2); alarms then fire natively.
+  const MAC = !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.istiqamah);
+  const WIN = !MAC && !!(window.chrome && window.chrome.webview);
+  const NATIVE = MAC || WIN;
   // Published as a claude.ai page: a locked-down frame (no print, downloads only through the
   // platform, no system notifications), and `confirm()` is unavailable.
   const HOSTED = !NATIVE && !!(window.claude && typeof window.claude.use === 'function');
   const SHARE_URL = 'https://zaytage.github.io/istiqamah/'; // the Istiqamah website
   const MAC_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip'; // always the newest Mac app
+  const WIN_URL = 'https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-windows.zip'; // always the newest Windows app
   const MIN = 60000, HOUR = 60 * MIN;
   const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
   const TIMES = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -153,7 +157,12 @@
     try { localStorage.setItem(STORE_KEY, data); } catch (e) { /* storage full or blocked */ }
     if (NATIVE) post({ type: 'save', data });
   }
-  function post(msg) { try { window.webkit.messageHandlers.istiqamah.postMessage(JSON.stringify(msg)); } catch (e) { /* not native */ } }
+  function post(msg) {
+    try {
+      if (MAC) window.webkit.messageHandlers.istiqamah.postMessage(JSON.stringify(msg));
+      else if (WIN) window.chrome.webview.postMessage(JSON.stringify(msg));
+    } catch (e) { /* not native */ }
+  }
 
   function emptyDay() {
     return { p: {}, j: {}, s: {}, t: {}, x: {}, quran: 0, kahf: false, mulk: false, c: { salawat: 0, istighfar: 0, dhikr: 0 }, a: { morning: false, evening: false, sleep: false }, n: { ishraq: false, duha: false, tahajjud: false }, note: '' };
@@ -459,7 +468,7 @@
   }
   function stopSound() {
     try { alarmAudio.pause(); } catch (e) { /* ignore */ }
-    if (NATIVE) post({ type: 'stopSound' });
+    if (MAC) post({ type: 'stopSound' });
   }
   function unlockAudio() {
     if (audioUnlocked) return;
@@ -1105,7 +1114,7 @@
   }
   function opt(v, label, cur) { return `<option value="${esc(v)}" ${String(v) === String(cur) ? 'selected' : ''}>${esc(label)}</option>`; }
   function adhanControl() {
-    if (NATIVE) {
+    if (MAC) {
       return `<span class="filename">${nativeInfo.adhanName ? esc(nativeInfo.adhanName) : 'No file yet. The chime plays instead.'}</span>
         <button type="button" class="btn sm secondary" data-sa="pick-adhan">Choose file…</button>
         ${nativeInfo.adhanName ? '<button type="button" class="btn sm ghost" data-sa="clear-adhan">Remove</button>' : ''}
@@ -1200,7 +1209,7 @@
           <ul class="custom-list">${(S.custom || []).map((c) => `<li><span>${esc(c.label)}</span><button type="button" class="btn sm ghost" data-sa="custom-del" data-id="${esc(c.id)}" aria-label="Remove ${esc(c.label)}">Remove</button></li>`).join('')}</ul>
           <div class="row"><input id="custom-new" maxlength="40" placeholder="e.g. Sadaqah"><button type="button" class="btn sm secondary" data-sa="custom-add">Add</button></div>
         </section>
-        ${NATIVE ? `<section><h3>Mac</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>Open Istiqamah when I log in</span></label></section>` : ''}
+        ${NATIVE ? `<section><h3>${MAC ? 'Mac' : 'Windows'}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC ? 'Open Istiqamah when I log in' : 'Start Istiqamah with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Istiqamah updates itself.</p>` : ''}</section>` : ''}
         <section><h3>Your data</h3>
           <p class="hint">Everything is stored on this device only${HOSTED ? ', in this browser' : ''}. Save a backup now and then, and to move your chart to another device.</p>
           <div class="row"><button type="button" class="btn sm secondary" data-sa="export">Save backup</button>
@@ -1214,7 +1223,7 @@
             <li>Place names and coordinates: GeoNames (geonames.org), CC BY 4.0.</li>
             <li>Prayer times use the astronomical method published by PrayTimes.org.</li></ul>
         </section>
-        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Istiqamah to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">On a Mac? <a href="' + MAC_URL + '" target="_blank" rel="noopener">Download the Mac app</a> for the full-screen adhan, even when this page is closed. It keeps itself up to date.</p>') + '</section>' : ''}
+        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Istiqamah to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a>. It keeps itself up to date.</p>') + '</section>' : ''}
       </div></div>`;
     const body = dlg.querySelector('.settings-body');
     if (body) body.scrollTop = prevScroll;
@@ -1259,14 +1268,14 @@
       }
       case 'test': testAlarm(); break;
       case 'pick-adhan': post({ type: 'chooseAdhan' }); break;
-      case 'clear-adhan': if (NATIVE) post({ type: 'clearAdhan' }); else clearAdhanFile(); break;
+      case 'clear-adhan': if (MAC) post({ type: 'clearAdhan' }); else clearAdhanFile(); break;
       case 'preview': {
         const file = S.alarm.sound === 'chime' ? 'sounds/chime.wav' : adhanFor(b.dataset.p || 'dhuhr');
-        if (NATIVE) post({ type: 'preview', text: file }); else playOn(alarmAudio, adhanSrc(file));
+        if (MAC) post({ type: 'preview', text: file }); else playOn(alarmAudio, adhanSrc(file));
         break;
       }
       case 'preview-sunnah': previewSunnah(b.dataset.kind); break;
-      case 'tone': if (NATIVE) post({ type: 'preview', text: `sounds/${b.dataset.tone}.wav` }); else playOn(reminderAudio, `sounds/${b.dataset.tone}.wav`); break;
+      case 'tone': if (MAC) post({ type: 'preview', text: `sounds/${b.dataset.tone}.wav` }); else playOn(reminderAudio, `sounds/${b.dataset.tone}.wav`); break;
       case 'stop': stopSound(); break;
       case 'custom-add': {
         const inp = $('#custom-new'), label = inp.value.trim();
@@ -1352,7 +1361,7 @@
   function exportData() {
     const data = JSON.stringify({ app: 'istiqamah', v: 1, exported: new Date().toISOString(), settings: state.settings, days: state.days }, null, 2);
     const filename = `istiqamah-backup-${todayKey()}.json`;
-    if (NATIVE) { post({ type: 'export', data, filename }); return; }
+    if (MAC) { post({ type: 'export', data, filename }); return; }
     if (HOSTED) {
       window.claude.use('downloads').then((dl) => {
         if (!dl) { info("Saving files isn't available here. Open Istiqamah in a browser to save a backup."); return; }
@@ -1404,7 +1413,7 @@
     info('Link copied. Paste it to share.');
   }
   function copyText(s) {
-    if (NATIVE) { post({ type: 'copy', text: s }); return; }
+    if (MAC) { post({ type: 'copy', text: s }); return; }
     if (navigator.clipboard) navigator.clipboard.writeText(s).catch(() => {});
   }
 
@@ -1477,7 +1486,7 @@
       }
       case 'period': period.type = el.dataset.v; period.anchor = todayKey(); renderProgress(); break;
       case 'period-move': movePeriod(Number(el.dataset.n)); break;
-      case 'print': if (NATIVE) post({ type: 'print' }); else window.print(); break;
+      case 'print': if (MAC) post({ type: 'print' }); else window.print(); break;
       case 'settings': openSettings(el.dataset.focus); break;
       case 'share': share(); break;
       case 'notif': enableNotifications(); break;
@@ -1553,7 +1562,7 @@
   if (NATIVE) document.documentElement.classList.add('native');
   render();
   rebuildSchedule();
-  if (!NATIVE) loadAdhan();
+  if (!MAC) loadAdhan();
   setInterval(tick, 15000);
   setTimeout(tick, 1200);
   if (NATIVE) post({ type: 'ready' });

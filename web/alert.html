@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Istiqamah</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    body.toast-mode { background: var(--surface); }
+    body.toast-mode .toast { box-shadow: none; border: 0; border-radius: 0; animation: none; }
+    body.popup-mode #overlay { border-radius: 0; }
+  </style>
+</head>
+<body>
+  <!-- Shown by the Windows app in its own always-on-top window: the full-screen alarm or a corner reminder. -->
+  <div id="root"></div>
+  <script src="alert.js"></script>
+</body>
+</html>
