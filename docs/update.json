@@ -1,16 +1,16 @@
 {
   "app": {
-    "version": "1.2",
-    "build": 4,
-    "sha256": "5363d57227d4c6db8ff29b4a6bb820f9896f8aa4c863094425a5ccaf780a6a2a",
-    "notes": "Istiqamah for Windows is here. The Mac app also gets small improvements.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2/Istiqamah-mac.zip"
+    "version": "1.2.1",
+    "build": 5,
+    "sha256": "3c02e190a06e85ddad547b5fb73daccd2dabcb460f7621c8d4f2b2847d0ec458",
+    "notes": "Fixes hearing the adhan twice if Istiqamah was opened twice: only one copy can run now.",
+    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2.1/Istiqamah-mac.zip"
   },
   "windows": {
-    "version": "1.2",
-    "build": 4,
-    "sha256": "e06ef8be6be9220b3beb303fd6b0fe3cf117b20ae6f167e0d8c1f54b3669c58a",
-    "notes": "Istiqamah for Windows is here. The Mac app also gets small improvements.",
-    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2/Istiqamah-windows.zip"
+    "version": "1.2.1",
+    "build": 5,
+    "sha256": "f1ce8b516d003e8ab2d994dd3183fbf4efce84e0fe9e58d8ca812201192ed752",
+    "notes": "Fixes hearing the adhan twice if Istiqamah was opened twice: only one copy can run now.",
+    "url": "https://github.com/zaytage/istiqamah/releases/download/v1.2.1/Istiqamah-windows.zip"
   }
 }
