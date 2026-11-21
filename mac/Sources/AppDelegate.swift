@@ -38,6 +38,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         setupWindow()
         timers.append(Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(tick), userInfo: nil, repeats: true))
         timers.append(Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(requestSchedule), userInfo: nil, repeats: true))
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(openWindowAction),
+                                                            name: IstiqamahMain.showNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(didWake),
                                                           name: NSWorkspace.didWakeNotification, object: nil)
         updateStatusTitle()
