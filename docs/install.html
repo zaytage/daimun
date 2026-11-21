@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Install Istiqamah</title>
+  <meta name="description" content="How to install Istiqamah on a Mac, a Windows PC or your phone, in a few steps.">
+  <meta name="theme-color" content="#0f4d45">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .guide { max-width: 760px; }
+    .intro h1 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 6px; text-wrap: balance; }
+    .intro p { margin: 0; color: var(--muted); max-width: 60ch; }
+    .picker-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+    .picker-tabs a { text-decoration: none; padding: 8px 16px; border-radius: 999px; background: var(--surface-2); color: var(--text); font-weight: 600; font-size: 14px; }
+    .picker-tabs a:hover { background: var(--accent-soft); color: var(--accent); }
+    .platform h2 { font-size: 21px; display: flex; align-items: center; gap: 10px; }
+    .platform .req { color: var(--muted); font-size: 13px; margin: 4px 0 14px; }
+    .dl { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; padding: 13px 22px; border-radius: 14px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 16px; }
+    .dl:hover { background: var(--accent-strong); }
+    .dl small { font-weight: 500; opacity: 0.85; }
+    ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 12px; }
+    ol.steps > li { counter-increment: step; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; }
+    ol.steps > li::before {
+      content: counter(step); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 14px;
+    }
+    ol.steps p { margin: 4px 0 0; }
+    .say { display: block; margin-top: 8px; padding: 10px 14px; border-radius: 12px; background: var(--surface-2); border-left: 3px solid var(--gold); font-size: 14px; }
+    .say b { font-weight: 700; }
+    .ok { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); color: var(--text); font-size: 14px; }
+    .why { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+    kbd { font: 600 12.5px var(--font); padding: 2px 7px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); }
+    .foot a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="icons/favicon.png" alt="" width="28" height="28"><span>Istiqamah</span></div>
+    <nav class="tabs" aria-label="Site"><a class="btn sm secondary" href="./">Open the web version</a></nav>
+  </header>
+
+  <main class="guide">
+    <section class="card intro">
+      <h1>Install Istiqamah</h1>
+      <p>Free, with no account and no ads. It calls you to every solah with the adhan and keeps your daily chart private on your own device. Choose your device:</p>
+      <div class="picker-tabs"><a href="#mac">Mac</a><a href="#windows">Windows</a><a href="#phone">Phone</a></div>
+    </section>
+
+    <section class="card platform" id="mac">
+      <h2>🍎 Mac</h2>
+      <p class="req">macOS 13 (Ventura) or newer · Apple chip or Intel · about 11 MB</p>
+      <a class="dl" href="https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip">Download for Mac <small>· .zip</small></a>
+      <ol class="steps">
+        <li><div><b>Open the download.</b><p>Double-click <b>Istiqamah-mac.zip</b> in your Downloads folder. It turns into the Istiqamah app.</p></div></li>
+        <li><div><b>Drag Istiqamah into your Applications folder.</b><p>Then double-click it there to open it.</p></div></li>
+        <li><div><b>You'll see a warning. That's expected.</b>
+          <span class="say">"Istiqamah" Not Opened. Apple could not verify "Istiqamah" is free of malware…</span>
+          <p>Click <b>Done</b>, not <i>Move to Bin</i>. Istiqamah is safe; it just isn't registered with Apple yet.</p></div></li>
+        <li><div><b>Allow it once.</b><p>Open <b>System Settings → Privacy &amp; Security</b>, scroll down to the message about "Istiqamah" and click <b>Open Anyway</b>. Click <b>Open Anyway</b> again and enter your Mac password if asked.</p></div></li>
+        <li><div><b>Choose your town.</b><p>Pick your country, state and city so prayer times are exact. Look for the 🌙 moon in the menu bar at the top of your screen. Click it and turn on <b>Open at login</b>.</p></div></li>
+      </ol>
+      <p class="ok">✓ That's it. You only allow it once. After that it opens normally and <b>updates itself</b>.</p>
+    </section>
+
+    <section class="card platform" id="windows">
+      <h2>🪟 Windows</h2>
+      <p class="req">Windows 10 or 11 · about 11 MB</p>
+      <a class="dl" href="https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-windows.zip">Download for Windows <small>· .zip</small></a>
+      <ol class="steps">
+        <li><div><b>Extract the download.</b><p>In your Downloads folder, right-click <b>Istiqamah-windows.zip</b> and choose <b>Extract All…</b> then <b>Extract</b>.</p></div></li>
+        <li><div><b>Open the Istiqamah folder and double-click Istiqamah.exe.</b></div></li>
+        <li><div><b>You may see a blue warning. That's expected.</b>
+          <span class="say">Windows protected your PC</span>
+          <p>Click <b>More info</b>, then <b>Run anyway</b>. Istiqamah is safe; it just isn't signed with a paid certificate.</p></div></li>
+        <li><div><b>It installs itself.</b><p>No admin password needed. Istiqamah opens, adds itself to the Start menu and starts with Windows. You can delete the downloaded folder afterwards.</p></div></li>
+        <li><div><b>Choose your town.</b><p>Pick your country, state and city. Istiqamah lives by the clock: click the <kbd>^</kbd> arrow in the taskbar if you can't see the 🌙 icon, and drag it next to the clock to keep it in view.</p></div></li>
+      </ol>
+      <p class="ok">✓ That's it. Close the window and it keeps running by the clock, calling you at each solah. It <b>updates itself</b>.</p>
+    </section>
+
+    <section class="card platform" id="phone">
+      <h2>📱 Phone (or any other computer)</h2>
+      <p class="req">Any phone or browser · nothing to download</p>
+      <a class="dl" href="./">Open Istiqamah</a>
+      <ol class="steps">
+        <li><div><b>Open the link above</b> and choose your town.</div></li>
+        <li><div><b>Add it to your home screen.</b><p><b>iPhone</b> (Safari): tap Share → <b>Add to Home Screen</b>. <b>Android</b> (Chrome): tap ⋮ → <b>Add to Home screen</b> or <b>Install app</b>.</p></div></li>
+      </ol>
+      <p class="why">On phones the tracker and Progress work fully. The adhan plays only while Istiqamah is open on screen, so keep your usual phone adhan app for alarms.</p>
+    </section>
+
+    <p class="foot">Questions or a problem? Tell the person who sent you Istiqamah. It's open and free: <a href="https://github.com/zaytage/istiqamah">github.com/zaytage/istiqamah</a></p>
+  </main>
+</body>
+</html>

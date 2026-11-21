@@ -22,7 +22,7 @@ Everything is stored on the person's own device. Nothing is uploaded, and there 
 
 ## Mac app
 
-**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip (always the newest version).
+**Download:** https://github.com/zaytage/istiqamah/releases/latest/download/Istiqamah-mac.zip (always the newest version). Step-by-step guide for everyone: https://zaytage.github.io/istiqamah/install.html
 
 Unzip it and drag **Istiqamah** into **Applications**. The app isn't notarized by Apple, so the first time macOS blocks it: open **System Settings → Privacy & Security**, scroll down, click **Open Anyway** next to Istiqamah and confirm. After that it opens normally.
 
