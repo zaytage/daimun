@@ -64,7 +64,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in self?.updater.announceIfJustUpdated() }
         DispatchQueue.main.asyncAfter(deadline: .now() + 45) { [weak self] in self?.updater.check() }
-        timers.append(Timer.scheduledTimer(timeInterval: 6 * 3600, target: self, selector: #selector(checkUpdatesQuietly), userInfo: nil, repeats: true))
+        updater.watchNetwork()
+        timers.append(Timer.scheduledTimer(timeInterval: 3 * 3600, target: self, selector: #selector(checkUpdatesQuietly), userInfo: nil, repeats: true))
     }
     @objc func checkUpdatesQuietly() { updater.check() }
     @objc func checkUpdatesNow() { updater.check(userInitiated: true) }
@@ -381,6 +382,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
 
     @objc func didWake() {
         requestSchedule()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30) { [weak self] in self?.updater.check() }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in self?.tick() }
     }
 

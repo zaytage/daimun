@@ -1,5 +1,6 @@
 import AppKit
 import CryptoKit
+import Network
 
 /// Keeps Istiqamah up to date by itself.
 /// Reads a small feed on the Istiqamah website; when it lists a newer build, downloads the zip from
@@ -37,6 +38,25 @@ final class Updater: NSObject {
 
     private var checking = false
     private var ready: (app: URL, info: Feed.App)?
+    private var network: NWPathMonitor?
+    private var wasOnline = true
+
+    /// Check whenever the Mac (re)connects to the internet, a few seconds after the connection settles.
+    func watchNetwork() {
+        let m = NWPathMonitor()
+        m.pathUpdateHandler = { [weak self] path in
+            let online = path.status == .satisfied
+            DispatchQueue.main.async {
+                guard let self else { return }
+                if online && !self.wasOnline {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 15) { [weak self] in self?.check() }
+                }
+                self.wasOnline = online
+            }
+        }
+        m.start(queue: DispatchQueue(label: "istiqamah.network"))
+        network = m
+    }
 
     var currentVersion: String { Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?" }
     var currentBuild: Int { Int(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0") ?? 0 }
@@ -60,6 +80,8 @@ final class Updater: NSObject {
                 try await download(feed.app)
             } catch {
                 NSLog("Istiqamah: update check failed: \(error.localizedDescription)")
+                // Offline or a hiccup: try again in 20 minutes (connecting also triggers a check).
+                if !userInitiated { DispatchQueue.main.asyncAfter(deadline: .now() + 1200) { [weak self] in self?.check() } }
                 if userInitiated { tell("Couldn't check for updates", error.localizedDescription) }
             }
         }

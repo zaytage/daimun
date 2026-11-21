@@ -9,7 +9,7 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 
 FLAGS=(-swift-version 5 -O -parse-as-library
   -framework Cocoa -framework WebKit -framework SwiftUI -framework AVFoundation
-  -framework ServiceManagement -framework UniformTypeIdentifiers)
+  -framework ServiceManagement -framework UniformTypeIdentifiers -framework Network)
 
 swiftc "${FLAGS[@]}" -target arm64-apple-macos13.0 mac/Sources/*.swift -o build/Istiqamah-arm64
 if swiftc "${FLAGS[@]}" -target x86_64-apple-macos13.0 mac/Sources/*.swift -o build/Istiqamah-x86_64 2>/dev/null; then
