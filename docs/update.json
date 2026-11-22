@@ -4,13 +4,13 @@
     "build": 7,
     "sha256": "32719c96c6f7d5e273c4488fbd08f31aab74dc62e03fe6c4be0ee3acc8926074",
     "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-mac.zip"
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-mac-update.zip"
   },
   "windows": {
     "version": "1.3.0",
     "build": 7,
     "sha256": "2ac56f497c56e3e1989733206f011433e6ba8f85ebf126ef80886bb9ea4ad2a2",
     "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-windows.zip"
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-windows-update.zip"
   }
 }

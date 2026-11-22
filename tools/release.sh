@@ -62,7 +62,10 @@ git push -q origin main
 # Upload one file at a time and retry, so a slow connection doesn't break the release; publish only when all are up.
 "$GH" release view "v$VERSION" --repo "$REPO" >/dev/null 2>&1 || \
   "$GH" release create "v$VERSION" --draft --repo "$REPO" --title "Da’imun $VERSION" --notes "$NOTES"
-for f in build/Daimun-mac.zip build/Daimun-windows.zip ${EXTRA_ASSETS:-}; do
+# Apps update from their own copies (…-update.zip), so the plain downloads count new installs only.
+cp build/Daimun-mac.zip build/Daimun-mac-update.zip
+cp build/Daimun-windows.zip build/Daimun-windows-update.zip
+for f in build/Daimun-mac.zip build/Daimun-windows.zip build/Daimun-mac-update.zip build/Daimun-windows-update.zip ${EXTRA_ASSETS:-}; do
   for try in 1 2 3 4 5; do
     "$GH" release upload "v$VERSION" "$f" --clobber --repo "$REPO" && break
     [ "$try" = 5 ] && { echo "Upload of $f failed; run the script again when the connection is better."; exit 1; }
@@ -77,8 +80,8 @@ import json, sys
 version, build, sha, notes, repo, wsha = sys.argv[1:7]
 base = f"https://github.com/{repo}/releases/download/v{version}/"
 print(json.dumps({
-    "app": {"version": version, "build": int(build), "sha256": sha, "notes": notes, "url": base + "Daimun-mac.zip"},
-    "windows": {"version": version, "build": int(build), "sha256": wsha, "notes": notes, "url": base + "Daimun-windows.zip"},
+    "app": {"version": version, "build": int(build), "sha256": sha, "notes": notes, "url": base + "Daimun-mac-update.zip"},
+    "windows": {"version": version, "build": int(build), "sha256": wsha, "notes": notes, "url": base + "Daimun-windows-update.zip"},
 }, indent=2))
 EOF
 git add docs/update.json
