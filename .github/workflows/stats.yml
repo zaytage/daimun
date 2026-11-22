@@ -1,0 +1,23 @@
+# Once a day, save the download totals so the stats page can show growth over time.
+name: Daily download count
+on:
+  schedule:
+    - cron: "30 22 * * *"   # 23:30 in Lagos
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Save today's totals
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/count_downloads.py docs/stats-history.json
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/stats-history.json
+          git diff --cached --quiet || { git commit -m "Daily download count"; git push; }

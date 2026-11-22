@@ -52,6 +52,7 @@ fi
 rm -rf docs.tmp && mkdir docs.tmp
 rsync -a --exclude '.DS_Store' web/ docs.tmp/
 [ -f docs/update.json ] && cp docs/update.json docs.tmp/update.json
+[ -f docs/stats-history.json ] && cp docs/stats-history.json docs.tmp/stats-history.json  # kept by the daily count
 touch docs.tmp/.nojekyll
 rm -rf docs && mv docs.tmp docs
 
