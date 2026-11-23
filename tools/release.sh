@@ -58,7 +58,7 @@ rm -rf docs && mv docs.tmp docs
 
 git add -A
 git commit -q -m "Da’imun $VERSION" -m "$NOTES" -m "$TRAILER"
-git push -q origin main
+git pull -q --rebase origin main && git push -q origin main
 
 # Upload one file at a time and retry, so a slow connection doesn't break the release; publish only when all are up.
 "$GH" release view "v$VERSION" --repo "$REPO" >/dev/null 2>&1 || \
@@ -87,5 +87,5 @@ print(json.dumps({
 EOF
 git add docs/update.json
 git commit -q -m "Announce Da’imun $VERSION to the apps" -m "$TRAILER"
-git push -q origin main
+git pull -q --rebase origin main && git push -q origin main
 echo "Published $VERSION. Apps pick it up within a few hours, or straight away with Check for updates."
