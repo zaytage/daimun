@@ -38,7 +38,7 @@ Choose an adhan in Settings, or your own recording from the 🌙 menu → *Adhan
 
 1. Right-click the zip → **Extract All**, open the folder and double-click **Daimun.exe**.
 2. Windows may say "Windows protected your PC" (the app isn't signed with a paid certificate). Click **More info → Run anyway**.
-3. Da’imun installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. You can then delete the downloaded folder.
+3. Da’imun installs itself for you (no admin password), adds itself to the Start menu, starts with Windows, and opens. If security software blocks the install, it runs from the extracted folder instead: keep that folder.
 
 It lives by the clock in the taskbar (click the ^ arrow if it's hidden; you can drag it next to the clock). It shows the same full-screen adhan, reminders, Today and Progress as the Mac app, and **updates itself** the same way. To remove it: taskbar icon → *Uninstall Da’imun…* (your chart is kept).
 
