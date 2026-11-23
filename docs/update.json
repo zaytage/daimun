@@ -1,16 +1,16 @@
 {
   "app": {
-    "version": "1.3.0",
-    "build": 7,
-    "sha256": "32719c96c6f7d5e273c4488fbd08f31aab74dc62e03fe6c4be0ee3acc8926074",
-    "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-mac-update.zip"
+    "version": "1.3.1",
+    "build": 8,
+    "sha256": "ec9c9e50beec301e0758cc2c4af2dd590c0fc09bea3918858963f239bb676868",
+    "notes": "Windows: Da\u2019imun now installs on PCs where security software blocked it, and runs from its folder if needed.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.1/Daimun-mac-update.zip"
   },
   "windows": {
-    "version": "1.3.0",
-    "build": 7,
-    "sha256": "2ac56f497c56e3e1989733206f011433e6ba8f85ebf126ef80886bb9ea4ad2a2",
-    "notes": "Istiqamah is now Da\u2019imun (\u062f\u0627\u0626\u0645\u0648\u0646): \u201cthose who are constant in their prayer\u201d (70:23). Your chart and settings stay the same.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.0/Daimun-windows-update.zip"
+    "version": "1.3.1",
+    "build": 8,
+    "sha256": "72d433dc350239e402f92e5a56712a4776dd581fc162d2aadca6e6e8c41cfd01",
+    "notes": "Windows: Da\u2019imun now installs on PCs where security software blocked it, and runs from its folder if needed.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.1/Daimun-windows-update.zip"
   }
 }
