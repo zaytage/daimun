@@ -165,7 +165,7 @@
   }
 
   function emptyDay() {
-    return { p: {}, j: {}, s: {}, t: {}, x: {}, quran: 0, kahf: false, mulk: false, c: { salawat: 0, istighfar: 0, dhikr: 0 }, a: { morning: false, evening: false, sleep: false }, n: { ishraq: false, duha: false, tahajjud: false }, note: '' };
+    return { p: {}, j: {}, s: {}, t: {}, x: {}, quran: 0, kahf: false, mulk: false, c: { salawat: 0, istighfar: 0, dhikr: 0 }, a: { morning: false, evening: false, sleep: false }, n: { ishraq: false, duha: false, tahajjud: false }, off: {}, note: '' };
   }
   function getDay(key, create) {
     let d = state.days[key];
@@ -251,8 +251,21 @@
       body: ish
         ? 'Whoever prays Fajr in congregation, sits remembering Allah until sunrise, then prays two rakʿahs has the reward of a complete Hajj and Umrah. (Tirmidhi)'
         : 'Every joint of your body owes a charity each morning, and two rakʿahs of Duha are enough for all of it. (Muslim)',
-      sound: kind, actions: [{ id: `nafl:${kind}`, label: ish ? 'Prayed Ishraq ✓' : 'Prayed Duha ✓', primary: true }, { id: 'dismiss', label: 'Later' }],
+      group: `${key}:${kind}`,
+      sound: kind, actions: [{ id: `nafl:${kind}`, label: ish ? 'Prayed Ishraq ✓' : 'Prayed Duha ✓', primary: true },
+        { id: 'dismiss', label: `Remind me in ${sunnahEvery()} min` }, { id: `off:${kind}`, label: 'Not today' }],
     };
+  }
+  function sunnahEvery() { return Math.max(5, state.settings.alarm.nagMinutes || 10); }
+  /** The Ishraq or Duha reminder, then a gentle reminder every few minutes until it is prayed, skipped or its time ends. */
+  function sunnahEvents(kind, key, x) {
+    const first = sunnahEvent(kind, key, x), every = sunnahEvery() * MIN, out = [first];
+    const name = kind === 'ishraq' ? 'Ishraq' : 'Duha';
+    for (let tt = first.at + every, k = 1; tt < first.until - 2 * MIN; tt += every, k++) {
+      out.push(Object.assign({}, first, { id: `${first.id}:again${k}`, at: tt, title: `Have you prayed ${name}?`,
+        subtitle: `${name} time ends at ${fmtTime(first.until)} · two rakʿahs or more`, sound: 'chime' }));
+    }
+    return out;
   }
   function previewSunnah(kind) {
     const now = new Date(), e = sunnahEvent(kind, todayKey(), timesFor(now) ? extraTimes(now) : { ishraq: Date.now(), duha: Date.now(), duhaEnd: Date.now() + HOUR });
@@ -345,8 +358,8 @@
       }
 
       const x = extraTimes(date);
-      if (R.ishraq && !day.n.ishraq) out.push(sunnahEvent('ishraq', key, x));
-      if (R.duha && !day.n.duha) out.push(sunnahEvent('duha', key, x));
+      if (R.ishraq && !day.n.ishraq && !day.off.ishraq) out.push(...sunnahEvents('ishraq', key, x));
+      if (R.duha && !day.n.duha && !day.off.duha) out.push(...sunnahEvents('duha', key, x));
       if (R.lastThird) {
         const nk = dateKey(new Date(x.lastThird));
         if (!getDay(nk).n.tahajjud) out.push({ id: `${key}:last-third`, kind: 'night', dateKey: nk, at: x.lastThird, until: timesFor(addDays(date, 1)).fajr,
@@ -546,8 +559,10 @@
     else if (parts[0] === 'tasbih') d.t[parts[1]] = true;
     else if (parts[0] === 'kahf') d.kahf = true;
     else if (parts[0] === 'nafl') d.n[parts[1]] = true;
+    else if (parts[0] === 'off') d.off[parts[1]] = true; // "Not today": no more reminders for it today
     else return;
     commit();
+    flush(); // save now: with the window closed, the system may hold back a delayed save
   }
   function afterPrayer(p, key) {
     const d = getDay(key);
