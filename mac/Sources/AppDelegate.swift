@@ -201,6 +201,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMe
     func setupWebView() {
         let config = WKWebViewConfiguration()
         config.userContentController.add(self, name: "istiqamah")
+        // Keep the page fully running while its window is closed, so taps on reminders are recorded and saved at once.
+        if #available(macOS 14.0, *) { config.preferences.inactiveSchedulingPolicy = .none }
         webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 1060, height: 820), configuration: config)
         webView.navigationDelegate = self
         webView.uiDelegate = self
