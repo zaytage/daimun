@@ -12,5 +12,12 @@
     "sha256": "48d5d71f210474ecd13812c19840ce2dbc6bc5ea1aebf4bf1417f779e144e9ac",
     "notes": "Taps on reminders, like Said it \u00d710, now always reach your counters, even when the Da\u2019imun window is closed.",
     "url": "https://github.com/zaytage/daimun/releases/download/v1.3.3/Daimun-windows-update.zip"
+  },
+  "linux": {
+    "version": "1.3.3",
+    "build": 10,
+    "sha256": "619893b3496557c2b46fc40866dd575b869460a0786ae27a40acd9d0f1753479",
+    "notes": "Taps on reminders, like Said it \u00d710, now always reach your counters, even when the Da\u2019imun window is closed.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.3/Daimun-linux-update.AppImage"
   }
 }
