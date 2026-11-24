@@ -1,0 +1,34 @@
+{
+  "name": "daimun",
+  "productName": "Daimun",
+  "version": "0.0.0",
+  "daimunBuild": 0,
+  "description": "Da’imun: the adhan on your laptop and a daily ibadah chart.",
+  "homepage": "https://zaytage.github.io/daimun/",
+  "author": "Da’imun <noreply@github.com>",
+  "license": "MIT",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux AppImage --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "app.daimun.linux",
+    "productName": "Daimun",
+    "artifactName": "Daimun-linux.AppImage",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "web/**/*", "package.json"],
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Utility",
+      "icon": "build/icon.png",
+      "synopsis": "The adhan on your laptop and a daily ibadah chart",
+      "desktop": { "Name": "Da’imun", "Comment": "The adhan on your laptop and a daily ibadah chart" }
+    }
+  }
+}

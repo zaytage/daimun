@@ -5,10 +5,13 @@
 
   // ------------------------------------------------------------------ constants
   const PT = window.PrayerTimes;
-  // Inside the Mac app (WKWebView) or the Windows app (WebView2); alarms then fire natively.
+  // Inside the Mac app (WKWebView), the Windows app (WebView2) or the Linux app (Electron, which speaks
+  // the Windows bridge); alarms then fire natively.
   const MAC = !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.istiqamah);
   const WIN = !MAC && !!(window.chrome && window.chrome.webview);
   const NATIVE = MAC || WIN;
+  const LINUX = WIN && !!window.__DAIMUN_LINUX__;
+  const OS_NAME = MAC ? 'Mac' : LINUX ? 'Linux' : 'Windows';
   // Published as a claude.ai page: a locked-down frame (no print, downloads only through the
   // platform, no system notifications), and `confirm()` is unavailable.
   const HOSTED = !NATIVE && !!(window.claude && typeof window.claude.use === 'function');
@@ -1225,7 +1228,7 @@
           <ul class="custom-list">${(S.custom || []).map((c) => `<li><span>${esc(c.label)}</span><button type="button" class="btn sm ghost" data-sa="custom-del" data-id="${esc(c.id)}" aria-label="Remove ${esc(c.label)}">Remove</button></li>`).join('')}</ul>
           <div class="row"><input id="custom-new" maxlength="40" placeholder="e.g. Sadaqah"><button type="button" class="btn sm secondary" data-sa="custom-add">Add</button></div>
         </section>
-        ${NATIVE ? `<section><h3>${MAC ? 'Mac' : 'Windows'}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC ? 'Open Da’imun when I log in' : 'Start Da’imun with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Da’imun updates itself.</p>` : ''}</section>` : ''}
+        ${NATIVE ? `<section><h3>${OS_NAME}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC || LINUX ? 'Open Da’imun when I log in' : 'Start Da’imun with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Da’imun updates itself.</p>` : ''}</section>` : ''}
         <section><h3>Your data</h3>
           <p class="hint">Everything is stored on this device only${HOSTED ? ', in this browser' : ''}. Save a backup now and then, and to move your chart to another device.</p>
           <div class="row"><button type="button" class="btn sm secondary" data-sa="export">Save backup</button>

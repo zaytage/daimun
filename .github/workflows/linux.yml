@@ -1,0 +1,75 @@
+# Builds the Linux app (an AppImage) on GitHub's Linux machines, checks that it starts and shows an alarm,
+# then adds it to the release and tells installed Linux apps about it.
+# tools/release.sh starts this after each release; it can also be run by hand for a version.
+name: Linux app
+on:
+  workflow_dispatch:
+    inputs:
+      version: { description: "Version, e.g. 1.4.0 (its release must exist)", required: true }
+      build: { description: "Build number (from mac/Info.plist)", required: true }
+      publish: { description: "Add to the release and the update feed", type: boolean, default: true }
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Prepare
+        working-directory: linux
+        run: |
+          rm -rf web && cp -r ../web web
+          mkdir -p build && cp ../web/icons/icon-512.png build/icon.png
+          node -e "const p=require('./package.json');p.version='${{ inputs.version }}';p.daimunBuild=Number('${{ inputs.build }}');require('fs').writeFileSync('package.json',JSON.stringify(p,null,2))"
+          npm install --no-audit --no-fund
+      - name: Build the AppImage
+        working-directory: linux
+        run: npx electron-builder --linux AppImage --x64 --publish never
+      - name: Check it starts and shows the test alarm
+        working-directory: linux
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb imagemagick >/dev/null
+          export HOME=$(mktemp -d)
+          xvfb-run -a -s "-screen 0 1280x800x24" bash -c '
+            ./dist/Daimun-linux.AppImage --appimage-extract-and-run --test-alarm > app.log 2>&1 &
+            sleep 25; import -window root shot.png; kill %1 || true; sleep 1'
+          cat app.log | tail -20
+          test -f "$HOME/.config/Daimun/fired.json" -o -f "$HOME/.local/share/applications/daimun.desktop"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-check
+          path: |
+            linux/shot.png
+            linux/app.log
+      - name: Add to the release and the update feed
+        if: ${{ inputs.publish }}
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          V=${{ inputs.version }}
+          cp linux/dist/Daimun-linux.AppImage linux/dist/Daimun-linux-update.AppImage
+          for f in linux/dist/Daimun-linux.AppImage linux/dist/Daimun-linux-update.AppImage; do
+            gh release upload "v$V" "$f" --clobber
+          done
+          SHA=$(sha256sum linux/dist/Daimun-linux.AppImage | cut -d' ' -f1)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for try in 1 2 3; do
+            git pull -q --rebase origin main
+            python3 - "$V" "${{ inputs.build }}" "$SHA" <<'EOF'
+          import json, sys
+          v, b, sha = sys.argv[1:4]
+          f = "docs/update.json"
+          feed = json.load(open(f))
+          notes = (feed.get("app") or {}).get("notes", "")
+          feed["linux"] = {"version": v, "build": int(b), "sha256": sha, "notes": notes,
+                           "url": f"https://github.com/${{ github.repository }}/releases/download/v{v}/Daimun-linux-update.AppImage"}
+          json.dump(feed, open(f, "w"), indent=2)
+          EOF
+            git add docs/update.json
+            git diff --cached --quiet && break
+            git commit -q -m "Announce Da’imun $V to Linux apps" && git push -q && break
+            sleep 10
+          done
