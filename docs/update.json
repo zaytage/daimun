@@ -1,16 +1,16 @@
 {
   "app": {
-    "version": "1.3.1",
-    "build": 8,
-    "sha256": "ec9c9e50beec301e0758cc2c4af2dd590c0fc09bea3918858963f239bb676868",
-    "notes": "Windows: Da\u2019imun now installs on PCs where security software blocked it, and runs from its folder if needed.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.1/Daimun-mac-update.zip"
+    "version": "1.3.2",
+    "build": 9,
+    "sha256": "dbe8b7b64e6957f9e0992a10588b4efe4763dc04d868f0a58c4dd0a836c79e48",
+    "notes": "Ishraq and Duha now remind you every 10 minutes until you pray them (or choose Not today), and dhikr you mark from a reminder is saved straight away.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.2/Daimun-mac-update.zip"
   },
   "windows": {
-    "version": "1.3.1",
-    "build": 8,
-    "sha256": "72d433dc350239e402f92e5a56712a4776dd581fc162d2aadca6e6e8c41cfd01",
-    "notes": "Windows: Da\u2019imun now installs on PCs where security software blocked it, and runs from its folder if needed.",
-    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.1/Daimun-windows-update.zip"
+    "version": "1.3.2",
+    "build": 9,
+    "sha256": "38e067100e560dac3e94e1e81fcc1eedf8049f6fdff2b9cc748c135c7e213d4e",
+    "notes": "Ishraq and Duha now remind you every 10 minutes until you pray them (or choose Not today), and dhikr you mark from a reminder is saved straight away.",
+    "url": "https://github.com/zaytage/daimun/releases/download/v1.3.2/Daimun-windows-update.zip"
   }
 }
