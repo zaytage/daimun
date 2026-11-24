@@ -18,6 +18,7 @@
   const SHARE_URL = 'https://zaytage.github.io/daimun/'; // the Da’imun website
   const MAC_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-mac.zip'; // always the newest Mac app
   const WIN_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-windows.zip'; // always the newest Windows app
+  const LINUX_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-linux.AppImage'; // always the newest Linux app
   const MIN = 60000, HOUR = 60 * MIN;
   const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
   const TIMES = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -1243,7 +1244,7 @@
             <li>Place names and coordinates: GeoNames (geonames.org), CC BY 4.0.</li>
             <li>Prayer times use the astronomical method published by PrayTimes.org.</li></ul>
         </section>
-        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Da’imun to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a>. It keeps itself up to date.</p>') + '</section>' : ''}
+        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Da’imun to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a> · <a href="' + LINUX_URL + '" target="_blank" rel="noopener">Linux</a>. It keeps itself up to date.</p>') + '</section>' : ''}
       </div></div>`;
     const body = dlg.querySelector('.settings-body');
     if (body) body.scrollTop = prevScroll;

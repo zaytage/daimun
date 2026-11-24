@@ -5,16 +5,20 @@
 
   // ------------------------------------------------------------------ constants
   const PT = window.PrayerTimes;
-  // Inside the Mac app (WKWebView) or the Windows app (WebView2); alarms then fire natively.
+  // Inside the Mac app (WKWebView), the Windows app (WebView2) or the Linux app (Electron, which speaks
+  // the Windows bridge); alarms then fire natively.
   const MAC = !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.istiqamah);
   const WIN = !MAC && !!(window.chrome && window.chrome.webview);
   const NATIVE = MAC || WIN;
+  const LINUX = WIN && !!window.__DAIMUN_LINUX__;
+  const OS_NAME = MAC ? 'Mac' : LINUX ? 'Linux' : 'Windows';
   // Published as a claude.ai page: a locked-down frame (no print, downloads only through the
   // platform, no system notifications), and `confirm()` is unavailable.
   const HOSTED = !NATIVE && !!(window.claude && typeof window.claude.use === 'function');
   const SHARE_URL = 'https://zaytage.github.io/daimun/'; // the Da’imun website
   const MAC_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-mac.zip'; // always the newest Mac app
   const WIN_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-windows.zip'; // always the newest Windows app
+  const LINUX_URL = 'https://github.com/zaytage/daimun/releases/latest/download/Daimun-linux.AppImage'; // always the newest Linux app
   const MIN = 60000, HOUR = 60 * MIN;
   const PRAYERS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
   const TIMES = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -1225,7 +1229,7 @@
           <ul class="custom-list">${(S.custom || []).map((c) => `<li><span>${esc(c.label)}</span><button type="button" class="btn sm ghost" data-sa="custom-del" data-id="${esc(c.id)}" aria-label="Remove ${esc(c.label)}">Remove</button></li>`).join('')}</ul>
           <div class="row"><input id="custom-new" maxlength="40" placeholder="e.g. Sadaqah"><button type="button" class="btn sm secondary" data-sa="custom-add">Add</button></div>
         </section>
-        ${NATIVE ? `<section><h3>${MAC ? 'Mac' : 'Windows'}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC ? 'Open Da’imun when I log in' : 'Start Da’imun with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Da’imun updates itself.</p>` : ''}</section>` : ''}
+        ${NATIVE ? `<section><h3>${OS_NAME}</h3><label class="toggle"><input type="checkbox" data-native="login" ${nativeInfo.login ? 'checked' : ''}><span class="switch" aria-hidden="true"></span><span>${MAC || LINUX ? 'Open Da’imun when I log in' : 'Start Da’imun with Windows'}</span></label>${nativeInfo.version ? `<p class="hint">Version ${esc(nativeInfo.version)}. Da’imun updates itself.</p>` : ''}</section>` : ''}
         <section><h3>Your data</h3>
           <p class="hint">Everything is stored on this device only${HOSTED ? ', in this browser' : ''}. Save a backup now and then, and to move your chart to another device.</p>
           <div class="row"><button type="button" class="btn sm secondary" data-sa="export">Save backup</button>
@@ -1240,7 +1244,7 @@
             <li>Place names and coordinates: GeoNames (geonames.org), CC BY 4.0.</li>
             <li>Prayer times use the astronomical method published by PrayTimes.org.</li></ul>
         </section>
-        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Da’imun to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a>. It keeps itself up to date.</p>') + '</section>' : ''}
+        ${shareUrl() ? '<section><h3>Share</h3><p class="hint">Send Da’imun to family and friends. Each person keeps their own private chart.</p><button type="button" class="btn sm primary" data-sa="share">Share link</button>' + (NATIVE ? '' : '<p class="hint">For the full-screen adhan even when this page is closed, get the app: <a href="' + MAC_URL + '" target="_blank" rel="noopener">Mac</a> · <a href="' + WIN_URL + '" target="_blank" rel="noopener">Windows</a> · <a href="' + LINUX_URL + '" target="_blank" rel="noopener">Linux</a>. It keeps itself up to date.</p>') + '</section>' : ''}
       </div></div>`;
     const body = dlg.querySelector('.settings-body');
     if (body) body.scrollTop = prevScroll;

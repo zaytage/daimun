@@ -45,7 +45,7 @@
     <section class="card intro">
       <h1>Install Da’imun</h1>
       <p>Free, with no account and no ads. It calls you to every solah with the adhan and keeps your daily chart private on your own device. Choose your device:</p>
-      <div class="picker-tabs"><a href="#mac">Mac</a><a href="#windows">Windows</a><a href="#phone">Phone</a></div>
+      <div class="picker-tabs"><a href="#mac">Mac</a><a href="#windows">Windows</a><a href="#linux">Linux</a><a href="#phone">Phone</a></div>
     </section>
 
     <section class="card platform" id="mac">
@@ -79,6 +79,19 @@
         <li><div><b>Choose your town.</b><p>Pick your country, state and city. Da’imun lives by the clock: click the <kbd>^</kbd> arrow in the taskbar if you can't see the 🌙 icon, and drag it next to the clock to keep it in view.</p></div></li>
       </ol>
       <p class="ok">✓ That's it. Close the window and it keeps running by the clock, calling you at each solah. It <b>updates itself</b>.</p>
+    </section>
+
+    <section class="card platform" id="linux">
+      <h2>🐧 Linux</h2>
+      <p class="req">Ubuntu, Fedora, Mint, Debian and most others · 64-bit · about 100 MB</p>
+      <a class="dl" href="https://github.com/zaytage/daimun/releases/latest/download/Daimun-linux.AppImage">Download for Linux <small>· .AppImage</small></a>
+      <ol class="steps">
+        <li><div><b>Put it somewhere to keep.</b><p>Move <b>Daimun-linux.AppImage</b> from Downloads to your home folder or an <b>Applications</b> folder. Keep it there: it is the app.</p></div></li>
+        <li><div><b>Allow it to run.</b><p>Right-click it → <b>Properties</b> → <b>Permissions</b>, and tick <b>Allow executing file as program</b>. Or in a terminal: <kbd>chmod +x Daimun-linux.AppImage</kbd></p></div></li>
+        <li><div><b>Double-click it.</b><p>If nothing happens on Ubuntu 22.04 or newer, install one small package once: <kbd>sudo apt install libfuse2</kbd> (on 24.04: <kbd>libfuse2t64</kbd>), then try again.</p></div></li>
+        <li><div><b>Choose your town.</b><p>Pick your country, state and city. Da’imun adds itself to your applications menu and opens when you log in. Look for the 🌙 icon in the top bar or system tray.</p></div></li>
+      </ol>
+      <p class="ok">✓ That's it. Close the window and it keeps running, calling you at each solah. It <b>updates itself</b>.</p>
     </section>
 
     <section class="card platform" id="phone">

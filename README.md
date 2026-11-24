@@ -32,6 +32,12 @@ Unzip it and drag **Da’imun** into **Applications**. The app isn't notarized b
 
 Choose an adhan in Settings, or your own recording from the 🌙 menu → *Adhan sound*.
 
+## Linux app
+
+**Download:** https://github.com/zaytage/daimun/releases/latest/download/Daimun-linux.AppImage (64-bit; Ubuntu, Fedora, Mint, Debian and most others).
+
+Make it executable (right-click → Properties → Permissions → *Allow executing file as program*, or `chmod +x Daimun-linux.AppImage`) and double-click it. On Ubuntu 22.04+ you may need `sudo apt install libfuse2` once. It adds itself to the applications menu, opens at login, shows the same full-screen adhan and reminders, and updates itself. Built on GitHub by `.github/workflows/linux.yml` (Electron, in `linux/`).
+
 ## Windows app
 
 **Download:** https://github.com/zaytage/daimun/releases/latest/download/Daimun-windows.zip (Windows 10 or 11).

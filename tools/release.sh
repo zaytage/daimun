@@ -88,4 +88,7 @@ EOF
 git add docs/update.json
 git commit -q -m "Announce Da’imun $VERSION to the apps" -m "$TRAILER"
 git pull -q --rebase --autostash origin main && git push -q origin main || { echo "Push failed: run git pull --rebase --autostash origin main && git push"; exit 1; }
+# The Linux app is built on GitHub's Linux machines; it adds itself to this release and the feed in about 10 minutes.
+"$GH" workflow run linux.yml --repo "$REPO" -f version="$VERSION" -f build="$BUILD" -f publish=true \
+  || echo "Couldn't start the Linux build: run it from the Actions tab (Linux app) with version $VERSION, build $BUILD."
 echo "Published $VERSION. Apps pick it up within a few hours, or straight away with Check for updates."
