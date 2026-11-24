@@ -57,7 +57,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for try in 1 2 3; do
-            git pull -q --rebase origin main
+            git checkout -- linux 2>/dev/null || true; git pull -q --rebase --autostash origin main
             python3 - "$V" "${{ inputs.build }}" "$SHA" <<'EOF'
           import json, sys
           v, b, sha = sys.argv[1:4]
